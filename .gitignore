@@ -1,0 +1,65 @@
+############################################
+# Java / Maven
+############################################
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+*.log
+
+############################################
+# NetBeans
+############################################
+# Carpeta privada de NetBeans (usuarios/paths locales)
+nbproject/private/
+# Archivos/carpeta de caché y artefactos de NetBeans
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+.nb-cache/
+# Lock files temporales
+*.lock
+
+############################################
+# IDEs adicionales (por si alguien usa otro editor)
+############################################
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+############################################
+# Sistema Operativo
+############################################
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+############################################
+# Temporales / backups
+############################################
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
