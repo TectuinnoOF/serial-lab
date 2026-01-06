@@ -4,19 +4,22 @@
 
 package com.tectuinno.seriallab;
 
+import com.tectuinno.seriallab.config.FlatlafConfig;
 import com.tectuinno.seriallab.view.Principal;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * the starting class of the project
  * @author root
  */
 public class Seriallab {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {                
         
         try{
+            
+            FlatlafConfig.enablingFlatlafUI();
             
             SwingUtilities.invokeLater(new Runnable(){
             
