@@ -4,6 +4,9 @@
  */
 package com.tectuinno.seriallab.view;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 /**
  * Formulario principal
  * @author root
@@ -31,6 +34,8 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipalContainer = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
+        jMenuFileNew = new javax.swing.JMenu();
+        jMenuItemNewWorkSpace = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +53,15 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenuFile.setText("Archivo");
+
+        jMenuFileNew.setText("Nuevo");
+
+        jMenuItemNewWorkSpace.setText("Espacio de trabajo");
+        jMenuItemNewWorkSpace.addActionListener(this::openWorkSpaceWizard);
+        jMenuFileNew.add(jMenuItemNewWorkSpace);
+
+        jMenuFile.add(jMenuFileNew);
+
         jMenuBar1.add(jMenuFile);
 
         jMenu2.setText("Propiedades");
@@ -68,36 +82,41 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
-     * @param args the command line arguments
+     * this method call a new instance of a {@code FrWorkSpaceWizard}
+     * @param evt 
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void openWorkSpaceWizard(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openWorkSpaceWizard
+        
+        JFrame parent = this;
+        
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    
+                    FrWorkSpaceWizard frameWizar = new FrWorkSpaceWizard();
+                    frameWizar.setLocationRelativeTo(parent);
+                    frameWizar.setVisible(true);
+                    frameWizar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    
+                }catch(Exception ex){
+                    System.out.println("Error: " + ex.getMessage());
+                    ex.printStackTrace(System.err);
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Principal().setVisible(true));
-    }
-
+        });
+        
+    }//GEN-LAST:event_openWorkSpaceWizard
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenu jMenuFileNew;
+    private javax.swing.JMenuItem jMenuItemNewWorkSpace;
     private javax.swing.JPanel panelPrincipalContainer;
     // End of variables declaration//GEN-END:variables
 }
