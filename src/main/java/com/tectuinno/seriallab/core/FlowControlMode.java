@@ -5,42 +5,49 @@
 package com.tectuinno.seriallab.core;
 
 /**
- * <h2>Flow Controll</h2>
- * El Flow Controll sirve como un mecanismo para evitar la perdida de datos cuando un lado (Receptor) no puede procesar o almacenar bytes tan rápido
- * como el otro lado (Emisor) los envia.
- * 
- * Define los distintos modos en los que se puede configurar un espacio de trabajo para el flow controll
+ * Modos de control de flujo para comunicación serial.
+ *
+ * <p>El control de flujo permite pausar/reanudar la transmisión para evitar pérdida de datos
+ * cuando el receptor no puede consumir bytes al ritmo del emisor.</p>
+ *
  * <ul>
- *  <li>NONE: sin control de flujo</li>
- *  <li>RTS/CTS: Hardware flow controll -> uso de lineas adicionales del estandar serial (Aparte de TX/RX y gnd)
- *  <ul>
- *      <li>RTS: Solicitar permiso para enviar</li>
- *      <li>CTS: linea usada para dar permiso o indicar que es seguro enviar</li>
- *  </ul>
- *  </li>
- *  <li>XON/XOFF: Control por software
- *      <ul>
- *          <li>receptor envia XOFF cuando se llena el buffer</li>
- *          <li>emisor detiene el envio</li>
- *          <li>receptor envia XON cuando puede seguir recibiendo</li>
- *      </ul>
- *  </li>
+ *   <li>{@link #NONE}: sin control de flujo.</li>
+ *   <li>{@link #RTS_CTS}: control de flujo por hardware usando líneas RTS/CTS.</li>
+ *   <li>{@link #XON_XOFF}: control de flujo por software usando bytes XON/XOFF.</li>
  * </ul>
+ *
  * @author root
+ * @since 0.1.0
  */
 public enum FlowControlMode {
     
+    /** No se aplica control de flujo. */
     NONE(1),
+
+    /** Control de flujo por hardware (RTS/CTS). */
     RTS_CTS(2),
+
+    /** Control de flujo por software (XON/XOFF). */
     XON_XOFF(3);
     
-    
+    /**
+     * Código persistible del modo (por ejemplo, para guardar en el workspace).
+     */
     private int controlMode;
     
+    /**
+     * Constructor privado, previene instancia
+     * @param controlMode 
+     */
     private FlowControlMode(int controlMode){
         this.controlMode = controlMode;
     }
     
+    /**
+     * Devuelve el código persistible asociado al modo.
+     *
+     * @return código entero del modo
+     */
     public int getControlMode(){
         return this.controlMode;
     }
