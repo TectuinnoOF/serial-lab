@@ -215,9 +215,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnOpenFileChoser">
                       <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/com/tectuinno/seriallab/assets/folder_11611193.png"/>
-                        </Property>
+                        <Property name="text" type="java.lang.String" value="src..."/>
                         <Property name="toolTipText" type="java.lang.String" value="Abrir el explorador de archivos"/>
                       </Properties>
                       <Events>

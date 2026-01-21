@@ -73,7 +73,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         textFieldSourcePath.setEditable(false);
         textFieldSourcePath.setToolTipText("Ruta en la cual serán almacenados los datos del espacio de trabajo");
 
-        btnOpenFileChoser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tectuinno/seriallab/assets/folder_11611193.png"))); // NOI18N
+        btnOpenFileChoser.setText("src...");
         btnOpenFileChoser.setToolTipText("Abrir el explorador de archivos");
         btnOpenFileChoser.addActionListener(this::btnOpenFileChoserActionPerformed);
 
@@ -101,7 +101,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)))
+                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelGeneralWorkspaceDataParametersLayout.setVerticalGroup(
