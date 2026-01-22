@@ -39,10 +39,13 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         textFieldAuthorsName = new javax.swing.JTextField();
         lblCreatedAt = new javax.swing.JLabel();
         textFieldCreatedAt = new javax.swing.JTextField();
-        lblSourcePath = new javax.swing.JLabel();
+        lblWorkspaceVersion = new javax.swing.JLabel();
         textFieldSourcePath = new javax.swing.JTextField();
         btnOpenFileChoser = new javax.swing.JButton();
+        lblSourcePath1 = new javax.swing.JLabel();
+        textFieldWorkSpaceVersion = new javax.swing.JTextField();
         panelUartSettings = new javax.swing.JPanel();
+        panelGeneralUartWorkSpaceParameters = new javax.swing.JPanel();
 
         jButton1.setText("jButton1");
 
@@ -67,8 +70,8 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         textFieldCreatedAt.setEditable(false);
         textFieldCreatedAt.setToolTipText("Fecha actual en la que se está creando el nuevo espacio de trabajo");
 
-        lblSourcePath.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblSourcePath.setText("Carpeta raiz");
+        lblWorkspaceVersion.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblWorkspaceVersion.setText("Version");
 
         textFieldSourcePath.setEditable(false);
         textFieldSourcePath.setToolTipText("Ruta en la cual serán almacenados los datos del espacio de trabajo");
@@ -76,6 +79,9 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         btnOpenFileChoser.setText("src...");
         btnOpenFileChoser.setToolTipText("Abrir el explorador de archivos");
         btnOpenFileChoser.addActionListener(this::btnOpenFileChoserActionPerformed);
+
+        lblSourcePath1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblSourcePath1.setText("Carpeta raiz");
 
         javax.swing.GroupLayout panelGeneralWorkspaceDataParametersLayout = new javax.swing.GroupLayout(panelGeneralWorkspaceDataParameters);
         panelGeneralWorkspaceDataParameters.setLayout(panelGeneralWorkspaceDataParametersLayout);
@@ -97,11 +103,15 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textFieldCreatedAt))
                     .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSourcePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE)))
+                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE))
+                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
+                        .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFieldWorkSpaceVersion)))
                 .addContainerGap())
         );
         panelGeneralWorkspaceDataParametersLayout.setVerticalGroup(
@@ -122,10 +132,14 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSourcePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFieldWorkSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelWorkSpaceGeneralSettingsLayout = new javax.swing.GroupLayout(panelWorkSpaceGeneralSettings);
@@ -138,20 +152,35 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
             panelWorkSpaceGeneralSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelWorkSpaceGeneralSettingsLayout.createSequentialGroup()
                 .addComponent(panelGeneralWorkspaceDataParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 255, Short.MAX_VALUE))
+                .addGap(0, 224, Short.MAX_VALUE))
         );
 
         tabbPaneParametersFields.addTab("General", panelWorkSpaceGeneralSettings);
+
+        panelGeneralUartWorkSpaceParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros UART"));
+
+        javax.swing.GroupLayout panelGeneralUartWorkSpaceParametersLayout = new javax.swing.GroupLayout(panelGeneralUartWorkSpaceParameters);
+        panelGeneralUartWorkSpaceParameters.setLayout(panelGeneralUartWorkSpaceParametersLayout);
+        panelGeneralUartWorkSpaceParametersLayout.setHorizontalGroup(
+            panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 490, Short.MAX_VALUE)
+        );
+        panelGeneralUartWorkSpaceParametersLayout.setVerticalGroup(
+            panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 224, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout panelUartSettingsLayout = new javax.swing.GroupLayout(panelUartSettings);
         panelUartSettings.setLayout(panelUartSettingsLayout);
         panelUartSettingsLayout.setHorizontalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelUartSettingsLayout.setVerticalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGroup(panelUartSettingsLayout.createSequentialGroup()
+                .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 186, Short.MAX_VALUE))
         );
 
         tabbPaneParametersFields.addTab("UART", panelUartSettings);
@@ -190,8 +219,10 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblAuthorsName;
     private javax.swing.JLabel lblCreatedAt;
-    private javax.swing.JLabel lblSourcePath;
+    private javax.swing.JLabel lblSourcePath1;
     private javax.swing.JLabel lblWorkspaceName;
+    private javax.swing.JLabel lblWorkspaceVersion;
+    private javax.swing.JPanel panelGeneralUartWorkSpaceParameters;
     private javax.swing.JPanel panelGeneralWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
     private javax.swing.JPanel panelUartSettings;
@@ -201,5 +232,6 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldCreatedAt;
     private javax.swing.JTextField textFieldSourcePath;
     private javax.swing.JTextField textFieldWorkSpaceName;
+    private javax.swing.JTextField textFieldWorkSpaceVersion;
     // End of variables declaration//GEN-END:variables
 }
