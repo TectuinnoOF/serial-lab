@@ -4,6 +4,17 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.core.FlowControlMode;
+import com.tectuinno.seriallab.core.ParityMode;
+import com.tectuinno.seriallab.core.TxEndingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author root
@@ -17,6 +28,10 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
      */
     public FrWorkSpaceWizard() {
         initComponents();
+        this.configParityModeCombobox();
+        this.configureStopbitsSpinnerModel();
+        this.configFlowControlModeCombobox();
+        this.configureTxEndingmodeComboBox();
     }
 
     /**
@@ -28,7 +43,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        configTimeStampButonGroup = new javax.swing.ButtonGroup();
         panelPrincipalContainer = new javax.swing.JPanel();
         tabbPaneParametersFields = new javax.swing.JTabbedPane();
         panelWorkSpaceGeneralSettings = new javax.swing.JPanel();
@@ -44,10 +59,29 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         btnOpenFileChoser = new javax.swing.JButton();
         lblSourcePath1 = new javax.swing.JLabel();
         textFieldWorkSpaceVersion = new javax.swing.JTextField();
+        lblDescripcion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaDescriptionWorkspace = new javax.swing.JTextArea();
         panelUartSettings = new javax.swing.JPanel();
         panelGeneralUartWorkSpaceParameters = new javax.swing.JPanel();
-
-        jButton1.setText("jButton1");
+        lblDataBits = new javax.swing.JLabel();
+        spinnerBaudRate = new javax.swing.JSpinner();
+        lblDefaultBaudRate = new javax.swing.JLabel();
+        spinnerDataBits = new javax.swing.JSpinner();
+        lblUartParity = new javax.swing.JLabel();
+        comboBoxParityMode = new javax.swing.JComboBox<>();
+        lblStopBits = new javax.swing.JLabel();
+        spinnerStopBits = new javax.swing.JSpinner();
+        comboBoxFlowControlModel = new javax.swing.JComboBox<>();
+        lblFlowControll1 = new javax.swing.JLabel();
+        panelConsoleAndSendParameters = new javax.swing.JPanel();
+        lblEndingMode = new javax.swing.JLabel();
+        comboBoxTxEndingMode = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        radioButtonDisableTimeStamp = new javax.swing.JRadioButton();
+        radioButtonEnableTimeStamp = new javax.swing.JRadioButton();
+        buttonCreateWorkspace = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Crear nuevo espacio de trabajo");
@@ -83,6 +117,13 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         lblSourcePath1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblSourcePath1.setText("Carpeta raiz");
 
+        lblDescripcion.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblDescripcion.setText("Descripción");
+
+        textAreaDescriptionWorkspace.setColumns(20);
+        textAreaDescriptionWorkspace.setRows(5);
+        jScrollPane1.setViewportView(textAreaDescriptionWorkspace);
+
         javax.swing.GroupLayout panelGeneralWorkspaceDataParametersLayout = new javax.swing.GroupLayout(panelGeneralWorkspaceDataParameters);
         panelGeneralWorkspaceDataParameters.setLayout(panelGeneralWorkspaceDataParametersLayout);
         panelGeneralWorkspaceDataParametersLayout.setHorizontalGroup(
@@ -107,11 +148,15 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 69, Short.MAX_VALUE))
+                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
                     .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
                         .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldWorkSpaceVersion)))
+                        .addComponent(textFieldWorkSpaceVersion))
+                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
+                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         panelGeneralWorkspaceDataParametersLayout.setVerticalGroup(
@@ -139,7 +184,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldWorkSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelWorkSpaceGeneralSettingsLayout = new javax.swing.GroupLayout(panelWorkSpaceGeneralSettings);
@@ -152,22 +201,149 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
             panelWorkSpaceGeneralSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelWorkSpaceGeneralSettingsLayout.createSequentialGroup()
                 .addComponent(panelGeneralWorkspaceDataParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 224, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabbPaneParametersFields.addTab("General", panelWorkSpaceGeneralSettings);
 
         panelGeneralUartWorkSpaceParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros UART"));
 
+        lblDataBits.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblDataBits.setText("Data bits:");
+
+        spinnerBaudRate.setModel(new javax.swing.SpinnerNumberModel(9600, 1200, 260000, 5));
+        spinnerBaudRate.setToolTipText("Taza de baudios por defecto para comunicación");
+
+        lblDefaultBaudRate.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblDefaultBaudRate.setText("Baud Rate:");
+
+        spinnerDataBits.setModel(new javax.swing.SpinnerNumberModel(8, 5, 16, 1));
+        spinnerDataBits.setToolTipText("Taza de baudios por defecto para comunicación");
+
+        lblUartParity.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblUartParity.setText("Parity:");
+
+        lblStopBits.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblStopBits.setText("Stop bits:");
+
+        spinnerStopBits.setToolTipText("Taza de baudios por defecto para comunicación");
+
+        lblFlowControll1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblFlowControll1.setText("Flow Control:");
+
         javax.swing.GroupLayout panelGeneralUartWorkSpaceParametersLayout = new javax.swing.GroupLayout(panelGeneralUartWorkSpaceParameters);
         panelGeneralUartWorkSpaceParameters.setLayout(panelGeneralUartWorkSpaceParametersLayout);
         panelGeneralUartWorkSpaceParametersLayout.setHorizontalGroup(
             panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                        .addComponent(lblUartParity)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxParityMode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStopBits)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spinnerStopBits))
+                    .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                        .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                                .addComponent(lblDefaultBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                                .addComponent(lblFlowControll1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBoxFlowControlModel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(209, 209, 209)))
+                        .addGap(0, 19, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelGeneralUartWorkSpaceParametersLayout.setVerticalGroup(
             panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 224, Short.MAX_VALUE)
+            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDefaultBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUartParity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxParityMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBoxFlowControlModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFlowControll1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        panelConsoleAndSendParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Envio y consola"));
+
+        lblEndingMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblEndingMode.setText("Tx Ending");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Time Stamp en consola"));
+
+        configTimeStampButonGroup.add(radioButtonDisableTimeStamp);
+        radioButtonDisableTimeStamp.setText("No permitir");
+
+        configTimeStampButonGroup.add(radioButtonEnableTimeStamp);
+        radioButtonEnableTimeStamp.setText("Permitir");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(radioButtonEnableTimeStamp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioButtonDisableTimeStamp)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioButtonDisableTimeStamp)
+                    .addComponent(radioButtonEnableTimeStamp))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelConsoleAndSendParametersLayout = new javax.swing.GroupLayout(panelConsoleAndSendParameters);
+        panelConsoleAndSendParameters.setLayout(panelConsoleAndSendParametersLayout);
+        panelConsoleAndSendParametersLayout.setHorizontalGroup(
+            panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEndingMode)
+                    .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelConsoleAndSendParametersLayout.setVerticalGroup(
+            panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
+                        .addComponent(lblEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelUartSettingsLayout = new javax.swing.GroupLayout(panelUartSettings);
@@ -175,25 +351,48 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         panelUartSettingsLayout.setHorizontalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelUartSettingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelUartSettingsLayout.setVerticalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUartSettingsLayout.createSequentialGroup()
                 .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 186, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 194, Short.MAX_VALUE))
         );
 
-        tabbPaneParametersFields.addTab("UART", panelUartSettings);
+        tabbPaneParametersFields.addTab("Configuración", panelUartSettings);
+
+        buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        buttonCreateWorkspace.setText("Crear");
+
+        buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        buttonCancel.setText("Cancelar");
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
         panelPrincipalContainerLayout.setHorizontalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tabbPaneParametersFields)
+            .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonCancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonCreateWorkspace))
         );
         panelPrincipalContainerLayout.setVerticalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbPaneParametersFields)
+            .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
+                .addComponent(tabbPaneParametersFields, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonCreateWorkspace)
+                    .addComponent(buttonCancel))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,20 +413,77 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnOpenFileChoserActionPerformed
     
+    /**
+     * Set the inicial values of the combobox from <code>ParityMode</code> enum
+     * @author Pablo_g
+     * @see ParityMode
+     */
+    private void configParityModeCombobox(){        
+        this.comboBoxParityMode.setModel(new DefaultComboBoxModel<>(ParityMode.values()));
+    }
+    
+    /**
+     * Set the inicial values of the combobox from <code>FlowControlMode</code> enum
+     * @author pablo_g
+     * @see FlowControlMode
+     */
+    private void configFlowControlModeCombobox(){
+        this.comboBoxFlowControlModel.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));
+    }
+    
+    private void configureTxEndingmodeComboBox(){
+        this.comboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
+    }
+    
+    /**
+     * Set the permitted values for the JSpinner used to set the Stop bits mode
+     * @author Pablo_g
+     */
+    private void configureStopbitsSpinnerModel(){
+        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 2, 0.5f);        
+        this.spinnerStopBits.setModel(model);
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) this.spinnerStopBits.getEditor();
+        DecimalFormat format = editor.getFormat();
+        format.setMinimumFractionDigits(1);
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOpenFileChoser;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonCancel;
+    private javax.swing.JButton buttonCreateWorkspace;
+    private javax.swing.JComboBox<FlowControlMode> comboBoxFlowControlModel;
+    private javax.swing.JComboBox<ParityMode> comboBoxParityMode;
+    private javax.swing.JComboBox<TxEndingMode> comboBoxTxEndingMode;
+    private javax.swing.ButtonGroup configTimeStampButonGroup;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAuthorsName;
     private javax.swing.JLabel lblCreatedAt;
+    private javax.swing.JLabel lblDataBits;
+    private javax.swing.JLabel lblDefaultBaudRate;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblEndingMode;
+    private javax.swing.JLabel lblFlowControll1;
     private javax.swing.JLabel lblSourcePath1;
+    private javax.swing.JLabel lblStopBits;
+    private javax.swing.JLabel lblUartParity;
     private javax.swing.JLabel lblWorkspaceName;
     private javax.swing.JLabel lblWorkspaceVersion;
+    private javax.swing.JPanel panelConsoleAndSendParameters;
     private javax.swing.JPanel panelGeneralUartWorkSpaceParameters;
     private javax.swing.JPanel panelGeneralWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
     private javax.swing.JPanel panelUartSettings;
     private javax.swing.JPanel panelWorkSpaceGeneralSettings;
+    private javax.swing.JRadioButton radioButtonDisableTimeStamp;
+    private javax.swing.JRadioButton radioButtonEnableTimeStamp;
+    private javax.swing.JSpinner spinnerBaudRate;
+    private javax.swing.JSpinner spinnerDataBits;
+    private javax.swing.JSpinner spinnerStopBits;
     private javax.swing.JTabbedPane tabbPaneParametersFields;
+    private javax.swing.JTextArea textAreaDescriptionWorkspace;
     private javax.swing.JTextField textFieldAuthorsName;
     private javax.swing.JTextField textFieldCreatedAt;
     private javax.swing.JTextField textFieldSourcePath;
