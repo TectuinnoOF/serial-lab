@@ -5,6 +5,7 @@
 package com.tectuinno.seriallab.view;
 
 import com.tectuinno.seriallab.core.FlowControlMode;
+import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
 import java.text.DecimalFormat;
@@ -20,7 +21,7 @@ import javax.swing.SwingConstants;
  * @author root
  */
 public class FrWorkSpaceWizard extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
 
     /**
@@ -32,6 +33,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.configureStopbitsSpinnerModel();
         this.configFlowControlModeCombobox();
         this.configureTxEndingmodeComboBox();
+        this.configureFramingModeComboBox();
     }
 
     /**
@@ -80,6 +82,9 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         radioButtonDisableTimeStamp = new javax.swing.JRadioButton();
         radioButtonEnableTimeStamp = new javax.swing.JRadioButton();
+        panelFramingModeParameters = new javax.swing.JPanel();
+        lblFramingMode = new javax.swing.JLabel();
+        comboBoxFramingmode = new javax.swing.JComboBox<>();
         buttonCreateWorkspace = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
 
@@ -346,15 +351,39 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelFramingModeParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Framing"));
+
+        lblFramingMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblFramingMode.setText("Framing mode:");
+
+        javax.swing.GroupLayout panelFramingModeParametersLayout = new javax.swing.GroupLayout(panelFramingModeParameters);
+        panelFramingModeParameters.setLayout(panelFramingModeParametersLayout);
+        panelFramingModeParametersLayout.setHorizontalGroup(
+            panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFramingModeParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblFramingMode)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboBoxFramingmode, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelFramingModeParametersLayout.setVerticalGroup(
+            panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFramingModeParametersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFramingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxFramingmode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout panelUartSettingsLayout = new javax.swing.GroupLayout(panelUartSettings);
         panelUartSettings.setLayout(panelUartSettingsLayout);
         panelUartSettingsLayout.setHorizontalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelUartSettingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelFramingModeParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelUartSettingsLayout.setVerticalGroup(
             panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,7 +391,9 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 194, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelFramingModeParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 63, Short.MAX_VALUE))
         );
 
         tabbPaneParametersFields.addTab("Configuración", panelUartSettings);
@@ -412,48 +443,57 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void btnOpenFileChoserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileChoserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnOpenFileChoserActionPerformed
-    
+
     /**
      * Set the inicial values of the combobox from <code>ParityMode</code> enum
+     *
      * @author Pablo_g
      * @see ParityMode
      */
-    private void configParityModeCombobox(){        
+    private void configParityModeCombobox() {
         this.comboBoxParityMode.setModel(new DefaultComboBoxModel<>(ParityMode.values()));
     }
-    
+
     /**
-     * Set the inicial values of the combobox from <code>FlowControlMode</code> enum
+     * Set the inicial values of the combobox from <code>FlowControlMode</code>
+     * enum
+     *
      * @author pablo_g
      * @see FlowControlMode
      */
-    private void configFlowControlModeCombobox(){
+    private void configFlowControlModeCombobox() {
         this.comboBoxFlowControlModel.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));
     }
-    
-    private void configureTxEndingmodeComboBox(){
+
+    private void configureTxEndingmodeComboBox() {
         this.comboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
     }
     
+    private void configureFramingModeComboBox(){
+        this.comboBoxFramingmode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
+    }
+
     /**
      * Set the permitted values for the JSpinner used to set the Stop bits mode
+     *
      * @author Pablo_g
      */
-    private void configureStopbitsSpinnerModel(){
-        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 2, 0.5f);        
+    private void configureStopbitsSpinnerModel() {
+        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 2, 0.5f);
         this.spinnerStopBits.setModel(model);
         JSpinner.NumberEditor editor = (JSpinner.NumberEditor) this.spinnerStopBits.getEditor();
         DecimalFormat format = editor.getFormat();
         format.setMinimumFractionDigits(1);
         editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOpenFileChoser;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonCreateWorkspace;
     private javax.swing.JComboBox<FlowControlMode> comboBoxFlowControlModel;
+    private javax.swing.JComboBox<FramingMode> comboBoxFramingmode;
     private javax.swing.JComboBox<ParityMode> comboBoxParityMode;
     private javax.swing.JComboBox<TxEndingMode> comboBoxTxEndingMode;
     private javax.swing.ButtonGroup configTimeStampButonGroup;
@@ -466,12 +506,14 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblEndingMode;
     private javax.swing.JLabel lblFlowControll1;
+    private javax.swing.JLabel lblFramingMode;
     private javax.swing.JLabel lblSourcePath1;
     private javax.swing.JLabel lblStopBits;
     private javax.swing.JLabel lblUartParity;
     private javax.swing.JLabel lblWorkspaceName;
     private javax.swing.JLabel lblWorkspaceVersion;
     private javax.swing.JPanel panelConsoleAndSendParameters;
+    private javax.swing.JPanel panelFramingModeParameters;
     private javax.swing.JPanel panelGeneralUartWorkSpaceParameters;
     private javax.swing.JPanel panelGeneralWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
