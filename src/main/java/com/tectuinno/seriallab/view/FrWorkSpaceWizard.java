@@ -505,11 +505,15 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
      * @author Pablo_g
      */
     private void configureStopbitsSpinnerModel() {
-        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 2, 0.5f);
+        SpinnerNumberModel model = new SpinnerNumberModel(1d, 1d, 2d, 0.5d);
         this.spinnerStopBits.setModel(model);
-        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) this.spinnerStopBits.getEditor();
-        DecimalFormat format = editor.getFormat();
-        format.setMinimumFractionDigits(1);
+        
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.spinnerStopBits,"#0.#");
+        this.spinnerStopBits.setEditor(editor);
+        
+        DecimalFormat format = editor.getFormat();  
+        format.setMinimumFractionDigits(0);
+        format.setMaximumFractionDigits(1);
         editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
     }
 
