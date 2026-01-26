@@ -4,6 +4,7 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.core.ConsoleDisplayMode;
 import com.tectuinno.seriallab.core.FlowControlMode;
 import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
@@ -34,6 +35,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.configFlowControlModeCombobox();
         this.configureTxEndingmodeComboBox();
         this.configureFramingModeComboBox();
+        this.configureConsoleDisplayModeComboBox();
     }
 
     /**
@@ -82,6 +84,8 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         radioButtonDisableTimeStamp = new javax.swing.JRadioButton();
         radioButtonEnableTimeStamp = new javax.swing.JRadioButton();
+        lblDisplayMode = new javax.swing.JLabel();
+        comboBoxConsoleDisplayMode = new javax.swing.JComboBox<>();
         panelFramingModeParameters = new javax.swing.JPanel();
         lblFramingMode = new javax.swing.JLabel();
         comboBoxFramingmode = new javax.swing.JComboBox<>();
@@ -325,6 +329,9 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+        lblDisplayMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        lblDisplayMode.setText("Display");
+
         javax.swing.GroupLayout panelConsoleAndSendParametersLayout = new javax.swing.GroupLayout(panelConsoleAndSendParameters);
         panelConsoleAndSendParameters.setLayout(panelConsoleAndSendParametersLayout);
         panelConsoleAndSendParametersLayout.setHorizontalGroup(
@@ -335,8 +342,12 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEndingMode)
-                    .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblDisplayMode))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboBoxTxEndingMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBoxConsoleDisplayMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelConsoleAndSendParametersLayout.setVerticalGroup(
             panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,9 +356,13 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
                 .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
-                        .addComponent(lblEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDisplayMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxConsoleDisplayMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -472,6 +487,17 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void configureFramingModeComboBox(){
         this.comboBoxFramingmode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
     }
+    
+    /**
+     * Asigna el modelo de datos el combobox para seleccionar el modo de visualización de Texto en la consola.
+     * los valores son cargados desde {@code ConsoleDisplayMode}.
+     * 
+     * @author Pablo_g
+     * @see ConsoleDisplayMode
+     */
+    private void configureConsoleDisplayModeComboBox(){
+        this.comboBoxConsoleDisplayMode.setModel(new DefaultComboBoxModel<>(ConsoleDisplayMode.values()));
+    }
 
     /**
      * Set the permitted values for the JSpinner used to set the Stop bits mode
@@ -492,6 +518,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private javax.swing.JButton btnOpenFileChoser;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonCreateWorkspace;
+    private javax.swing.JComboBox<ConsoleDisplayMode> comboBoxConsoleDisplayMode;
     private javax.swing.JComboBox<FlowControlMode> comboBoxFlowControlModel;
     private javax.swing.JComboBox<FramingMode> comboBoxFramingmode;
     private javax.swing.JComboBox<ParityMode> comboBoxParityMode;
@@ -504,6 +531,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private javax.swing.JLabel lblDataBits;
     private javax.swing.JLabel lblDefaultBaudRate;
     private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblDisplayMode;
     private javax.swing.JLabel lblEndingMode;
     private javax.swing.JLabel lblFlowControll1;
     private javax.swing.JLabel lblFramingMode;

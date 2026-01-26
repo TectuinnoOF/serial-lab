@@ -492,10 +492,15 @@
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblEndingMode" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBoxTxEndingMode" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="lblEndingMode" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDisplayMode" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="comboBoxTxEndingMode" max="32767" attributes="0"/>
+                                  <Component id="comboBoxConsoleDisplayMode" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -506,9 +511,15 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="lblEndingMode" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblEndingMode" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="comboBoxTxEndingMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="comboBoxTxEndingMode" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblDisplayMode" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="comboBoxConsoleDisplayMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
@@ -588,6 +599,19 @@
                         </Component>
                       </SubComponents>
                     </Container>
+                    <Component class="javax.swing.JLabel" name="lblDisplayMode">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Liberation Sans" size="15" style="1"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Display"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="comboBoxConsoleDisplayMode">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ConsoleDisplayMode&gt;"/>
+                      </AuxValues>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="panelFramingModeParameters">
