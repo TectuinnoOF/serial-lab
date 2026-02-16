@@ -693,6 +693,9 @@
             <Property name="text" type="java.lang.String" value="Crear"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createWorkSpace"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonCancel">
           <Properties>

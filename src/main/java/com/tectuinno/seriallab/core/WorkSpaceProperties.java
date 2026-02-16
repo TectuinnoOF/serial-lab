@@ -40,6 +40,64 @@ public class WorkSpaceProperties implements Serializable {
 
     // --- Framing ---
     private FramingMode framingMode;
+    
+    public class WorkSpacePropertiesBuilder{
+        
+        private WorkSpaceProperties workSpaceProperties;
+        
+        public WorkSpacePropertiesBuilder(){
+            this.workSpaceProperties = new WorkSpaceProperties();
+        }
+        
+        public WorkSpacePropertiesBuilder setName(String name){
+            this.workSpaceProperties.setName(name);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setAuthor(String author){
+            this.workSpaceProperties.setAuthor(author);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setCreatedAt(LocalDateTime createdAt){
+            this.workSpaceProperties.setCreatedAt(createdAt);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setPath(String path){
+            this.workSpaceProperties.setPath(path);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setVersion(String version){
+            this.workSpaceProperties.setVersion(version);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setSerial(SerialConfig serialConfig){
+            this.workSpaceProperties.setSerial(serial);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setTxtEndingMode(TxEndingMode txtEndingMode){
+            this.workSpaceProperties.setTxEndingMode(txEndingMode);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setDisplayMode(DisplayMode displayMode){
+            this.workSpaceProperties.setDisplayMode(displayMode);
+            return this;
+        }
+        
+        public WorkSpacePropertiesBuilder setTimeStampEnabled(boolean timeStampEnabled){
+            this.workSpaceProperties.setTimestampEnabled(timeStampEnabled);
+            return this;
+        }
+        
+        public WorkSpaceProperties build(){
+            return this.workSpaceProperties;
+        }
+    }
 
     public WorkSpaceProperties(String name, String author, LocalDateTime createdAt, String path, String version, String description, SerialConfig serial, TxEndingMode txEndingMode, DisplayMode displayMode, boolean timestampEnabled, FramingMode framingMode) {
         this.name = name;
@@ -53,6 +111,10 @@ public class WorkSpaceProperties implements Serializable {
         this.displayMode = displayMode;
         this.timestampEnabled = timestampEnabled;
         this.framingMode = framingMode;
+    }
+    
+    public WorkSpacePropertiesBuilder builder(){
+        return new WorkSpacePropertiesBuilder();
     }
 
     public String getName() {

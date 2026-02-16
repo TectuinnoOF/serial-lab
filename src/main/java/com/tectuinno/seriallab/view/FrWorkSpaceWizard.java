@@ -9,6 +9,7 @@ import com.tectuinno.seriallab.core.FlowControlMode;
 import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
+import com.tectuinno.seriallab.core.WorkSpaceProperties;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
@@ -33,7 +34,7 @@ import javax.swing.border.Border;
  * @author root
  */
 public class FrWorkSpaceWizard extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
 
     /**
@@ -449,6 +450,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonCreateWorkspace.setText("Crear");
         buttonCreateWorkspace.setEnabled(false);
+        buttonCreateWorkspace.addActionListener(this::createWorkSpace);
 
         buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         buttonCancel.setText("Cancelar");
@@ -490,11 +492,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chooseRootPathWorkspace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRootPathWorkspace
-
+        
         final JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         final int returnVal = fileChooser.showDialog(this, "Seleccionar");
-
+        
         if (returnVal != JFileChooser.APPROVE_OPTION) {
             JOptionPane.showMessageDialog(this, "Es necesario señalar un directoio para el espacio de trabajo", "Atención", JOptionPane.WARNING_MESSAGE);
             return;
@@ -502,12 +504,12 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         File file = fileChooser.getSelectedFile();
         this.textFieldSourcePath.setText(file.getAbsolutePath());
     }//GEN-LAST:event_chooseRootPathWorkspace
-
-    private void setCurrentDateOnWorkApaceCreation(){        
+    
+    private void setCurrentDateOnWorkApaceCreation() {        
         LocalDate current = LocalDate.now();
         this.textFieldCreatedAt.setText(current.toString());
     }
-    
+
     /**
      * Verifica que el nombre del espacio de trabajo haya sido asignado
      *
@@ -536,8 +538,32 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.checkEmptieFieldsInWorkspaceData();
     }//GEN-LAST:event_verifyVersionWritten
 
+    /**
+     * Generación y creación de un nuevo espacio de trabajo.
+     *
+     * @param evt
+     */
+    private void createWorkSpace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createWorkSpace
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_createWorkSpace
     
-    
+    private WorkSpaceProperties mapWorkSpaceProperties() {
+        
+        try {
+            
+            return new WorkSpaceProperties().builder()
+                    .setName(this.textFieldWorkSpaceName.getText());
+                    .build();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        
+    }
+
     /**
      * <summary>Función únicamente visual</summary>
      * <p>
@@ -551,19 +577,19 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
      * @param textField
      */
     private void colorizeBorderOfEmptyFieldsOnFocuslost(JTextField textField) {
-
+        
         Border border = null;
         boolean dataAsigned = textField.getText().isEmpty() || textField.getText().length() <= 0;
-
+        
         if (dataAsigned) {
             border = BorderFactory.createLineBorder(Color.RED);
             textField.setBorder(border);
             return;
         }
-
+        
         border = BorderFactory.createLineBorder(Color.GREEN);
         textField.setBorder(border);
-
+        
     }
 
     /**
@@ -572,21 +598,21 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
      * vacios el botón para crear un nuevo worksapce permanecerá desactivado.
      */
     private void checkEmptieFieldsInWorkspaceData() {
-
+        
         boolean enableCreateButton = false;
-
+        
         Component[] cmps = this.panelGeneralWorkspaceDataParameters.getComponents();
-
+        
         for (Component cmp : cmps) {
-
+            
             if (cmp instanceof JTextField) {
                 enableCreateButton = ((JTextField) cmp).getText().length() > 0;
             }
-
+            
         }
-
+        
         this.buttonCreateWorkspace.setEnabled(enableCreateButton);
-
+        
     }
 
     /**
@@ -609,11 +635,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void configFlowControlModeCombobox() {
         this.comboBoxFlowControlModel.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));
     }
-
+    
     private void configureTxEndingmodeComboBox() {
         this.comboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
     }
-
+    
     private void configureFramingModeComboBox() {
         this.comboBoxFramingmode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
     }
@@ -638,10 +664,10 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void configureStopbitsSpinnerModel() {
         SpinnerNumberModel model = new SpinnerNumberModel(1d, 1d, 2d, 0.5d);
         this.spinnerStopBits.setModel(model);
-
+        
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.spinnerStopBits, "#0.#");
         this.spinnerStopBits.setEditor(editor);
-
+        
         DecimalFormat format = editor.getFormat();
         format.setMinimumFractionDigits(0);
         format.setMaximumFractionDigits(1);
