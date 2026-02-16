@@ -9,13 +9,24 @@ import com.tectuinno.seriallab.core.FlowControlMode;
 import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
+import java.awt.Color;
+import java.awt.Component;
+import java.io.File;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 /**
  *
@@ -36,6 +47,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.configureTxEndingmodeComboBox();
         this.configureFramingModeComboBox();
         this.configureConsoleDisplayModeComboBox();
+        this.setCurrentDateOnWorkApaceCreation();
     }
 
     /**
@@ -104,8 +116,18 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         lblAuthorsName.setText("Autor");
 
         textFieldWorkSpaceName.setToolTipText("Nombre que se le asigna al espacio de trabajo");
+        textFieldWorkSpaceName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                verifyNameWasWritten(evt);
+            }
+        });
 
         textFieldAuthorsName.setToolTipText("Autor que crea este espacio de trabajo");
+        textFieldAuthorsName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                verifyAuthorsName(evt);
+            }
+        });
 
         lblCreatedAt.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblCreatedAt.setText("Fecha de creación:");
@@ -118,13 +140,24 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         textFieldSourcePath.setEditable(false);
         textFieldSourcePath.setToolTipText("Ruta en la cual serán almacenados los datos del espacio de trabajo");
+        textFieldSourcePath.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                verifyAsignedRootPath(evt);
+            }
+        });
 
         btnOpenFileChoser.setText("src...");
         btnOpenFileChoser.setToolTipText("Abrir el explorador de archivos");
-        btnOpenFileChoser.addActionListener(this::btnOpenFileChoserActionPerformed);
+        btnOpenFileChoser.addActionListener(this::chooseRootPathWorkspace);
 
         lblSourcePath1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblSourcePath1.setText("Carpeta raiz");
+
+        textFieldWorkSpaceVersion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                verifyVersionWritten(evt);
+            }
+        });
 
         lblDescripcion.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         lblDescripcion.setText("Descripción");
@@ -415,6 +448,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonCreateWorkspace.setText("Crear");
+        buttonCreateWorkspace.setEnabled(false);
 
         buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         buttonCancel.setText("Cancelar");
@@ -455,9 +489,105 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOpenFileChoserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileChoserActionPerformed
+    private void chooseRootPathWorkspace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRootPathWorkspace
+
+        final JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        final int returnVal = fileChooser.showDialog(this, "Seleccionar");
+
+        if (returnVal != JFileChooser.APPROVE_OPTION) {
+            JOptionPane.showMessageDialog(this, "Es necesario señalar un directoio para el espacio de trabajo", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        File file = fileChooser.getSelectedFile();
+        this.textFieldSourcePath.setText(file.getAbsolutePath());
+    }//GEN-LAST:event_chooseRootPathWorkspace
+
+    private void setCurrentDateOnWorkApaceCreation(){        
+        LocalDate current = LocalDate.now();
+        this.textFieldCreatedAt.setText(current.toString());
+    }
+    
+    /**
+     * Verifica que el nombre del espacio de trabajo haya sido asignado
+     *
+     * @param evt
+     */
+    private void verifyNameWasWritten(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyNameWasWritten
+        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldWorkSpaceName);
+        this.checkEmptieFieldsInWorkspaceData();
+    }//GEN-LAST:event_verifyNameWasWritten
+
+    private void verifyAuthorsName(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyAuthorsName
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnOpenFileChoserActionPerformed
+        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldAuthorsName);
+        this.checkEmptieFieldsInWorkspaceData();
+    }//GEN-LAST:event_verifyAuthorsName
+
+    private void verifyAsignedRootPath(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyAsignedRootPath
+        // TODO add your handling code here:
+        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldSourcePath);
+        this.checkEmptieFieldsInWorkspaceData();
+    }//GEN-LAST:event_verifyAsignedRootPath
+
+    private void verifyVersionWritten(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyVersionWritten
+        // TODO add your handling code here:
+        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldWorkSpaceVersion);
+        this.checkEmptieFieldsInWorkspaceData();
+    }//GEN-LAST:event_verifyVersionWritten
+
+    
+    
+    /**
+     * <summary>Función únicamente visual</summary>
+     * <p>
+     * usado para cambiar el color de borde del @{@code JTextField} pasado como
+     * parámetro.</p>
+     * <ul>
+     * <li>Verde: en caso de que el campo tenga datos corrector</li>
+     * <li>Rojo: en caso de que el campo se encuentre vacio</li>
+     * </ul>
+     *
+     * @param textField
+     */
+    private void colorizeBorderOfEmptyFieldsOnFocuslost(JTextField textField) {
+
+        Border border = null;
+        boolean dataAsigned = textField.getText().isEmpty() || textField.getText().length() <= 0;
+
+        if (dataAsigned) {
+            border = BorderFactory.createLineBorder(Color.RED);
+            textField.setBorder(border);
+            return;
+        }
+
+        border = BorderFactory.createLineBorder(Color.GREEN);
+        textField.setBorder(border);
+
+    }
+
+    /**
+     * verifica cuales son los campos vacios en la pestaña de datos del wizar al
+     * crear un workspace. si durante la verificación se encuentran campos
+     * vacios el botón para crear un nuevo worksapce permanecerá desactivado.
+     */
+    private void checkEmptieFieldsInWorkspaceData() {
+
+        boolean enableCreateButton = false;
+
+        Component[] cmps = this.panelGeneralWorkspaceDataParameters.getComponents();
+
+        for (Component cmp : cmps) {
+
+            if (cmp instanceof JTextField) {
+                enableCreateButton = ((JTextField) cmp).getText().length() > 0;
+            }
+
+        }
+
+        this.buttonCreateWorkspace.setEnabled(enableCreateButton);
+
+    }
 
     /**
      * Set the inicial values of the combobox from <code>ParityMode</code> enum
@@ -483,19 +613,20 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void configureTxEndingmodeComboBox() {
         this.comboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
     }
-    
-    private void configureFramingModeComboBox(){
+
+    private void configureFramingModeComboBox() {
         this.comboBoxFramingmode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
     }
-    
+
     /**
-     * Asigna el modelo de datos el combobox para seleccionar el modo de visualización de Texto en la consola.
-     * los valores son cargados desde {@code ConsoleDisplayMode}.
-     * 
+     * Asigna el modelo de datos el combobox para seleccionar el modo de
+     * visualización de Texto en la consola. los valores son cargados desde
+     * {@code ConsoleDisplayMode}.
+     *
      * @author Pablo_g
      * @see ConsoleDisplayMode
      */
-    private void configureConsoleDisplayModeComboBox(){
+    private void configureConsoleDisplayModeComboBox() {
         this.comboBoxConsoleDisplayMode.setModel(new DefaultComboBoxModel<>(ConsoleDisplayMode.values()));
     }
 
@@ -507,11 +638,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
     private void configureStopbitsSpinnerModel() {
         SpinnerNumberModel model = new SpinnerNumberModel(1d, 1d, 2d, 0.5d);
         this.spinnerStopBits.setModel(model);
-        
-        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.spinnerStopBits,"#0.#");
+
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.spinnerStopBits, "#0.#");
         this.spinnerStopBits.setEditor(editor);
-        
-        DecimalFormat format = editor.getFormat();  
+
+        DecimalFormat format = editor.getFormat();
         format.setMinimumFractionDigits(0);
         format.setMaximumFractionDigits(1);
         editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);

@@ -209,11 +209,17 @@
                       <Properties>
                         <Property name="toolTipText" type="java.lang.String" value="Nombre que se le asigna al espacio de trabajo"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="verifyNameWasWritten"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textFieldAuthorsName">
                       <Properties>
                         <Property name="toolTipText" type="java.lang.String" value="Autor que crea este espacio de trabajo"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="verifyAuthorsName"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblCreatedAt">
                       <Properties>
@@ -242,6 +248,9 @@
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="toolTipText" type="java.lang.String" value="Ruta en la cual ser&#xe1;n almacenados los datos del espacio de trabajo"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="verifyAsignedRootPath"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnOpenFileChoser">
                       <Properties>
@@ -249,7 +258,7 @@
                         <Property name="toolTipText" type="java.lang.String" value="Abrir el explorador de archivos"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenFileChoserActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseRootPathWorkspace"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblSourcePath1">
@@ -261,6 +270,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textFieldWorkSpaceVersion">
+                      <Events>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="verifyVersionWritten"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblDescripcion">
                       <Properties>
@@ -679,6 +691,7 @@
               <Color blue="54" green="9c" id="Actions.Green" palette="3" red="49" type="palette"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Crear"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="buttonCancel">
