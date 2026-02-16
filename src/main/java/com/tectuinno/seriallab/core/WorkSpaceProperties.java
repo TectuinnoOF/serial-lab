@@ -35,71 +35,96 @@ public class WorkSpaceProperties implements Serializable {
 
     // --- Envío y consola ---
     private TxEndingMode txEndingMode;
-    private DisplayMode displayMode;
+    private ConsoleDisplayMode displayMode;
     private boolean timestampEnabled;
 
     // --- Framing ---
     private FramingMode framingMode;
-    
-    public class WorkSpacePropertiesBuilder{
-        
+
+    /**
+     * Builder fluido para construir instancias de {@link WorkSpaceProperties}.
+     *
+     * <p>
+     * Encapsula la asignación de campos del workspace y permite encadenar
+     * llamadas para armar el objeto antes de persistirlo (por ejemplo, a
+     * {@code workspace.json}).</p>
+     *
+     * <p>
+     * Nota: este builder no valida; la validación debe realizarse en la capa de
+     * aplicación antes de guardar o aplicar la configuración.</p>
+     *
+     * @author root
+     * @since 0.1.0
+     */
+    public class WorkSpacePropertiesBuilder {
+
         private WorkSpaceProperties workSpaceProperties;
-        
-        public WorkSpacePropertiesBuilder(){
+
+        public WorkSpacePropertiesBuilder() {
             this.workSpaceProperties = new WorkSpaceProperties();
         }
-        
-        public WorkSpacePropertiesBuilder setName(String name){
+
+        public WorkSpacePropertiesBuilder setName(String name) {
             this.workSpaceProperties.setName(name);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setAuthor(String author){
+
+        public WorkSpacePropertiesBuilder setAuthor(String author) {
             this.workSpaceProperties.setAuthor(author);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setCreatedAt(LocalDateTime createdAt){
+
+        public WorkSpacePropertiesBuilder setCreatedAt(LocalDateTime createdAt) {
             this.workSpaceProperties.setCreatedAt(createdAt);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setPath(String path){
+
+        public WorkSpacePropertiesBuilder setPath(String path) {
             this.workSpaceProperties.setPath(path);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setVersion(String version){
+
+        public WorkSpacePropertiesBuilder setVersion(String version) {
             this.workSpaceProperties.setVersion(version);
             return this;
         }
         
-        public WorkSpacePropertiesBuilder setSerial(SerialConfig serialConfig){
-            this.workSpaceProperties.setSerial(serial);
+        public WorkSpacePropertiesBuilder setDescription(String description){
+            this.workSpaceProperties.setDescription(description);
             return this;
         }
         
-        public WorkSpacePropertiesBuilder setTxtEndingMode(TxEndingMode txtEndingMode){
-            this.workSpaceProperties.setTxEndingMode(txEndingMode);
+        public WorkSpacePropertiesBuilder setSerial(SerialConfig serialConfig) {
+            this.workSpaceProperties.setSerial(serialConfig);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setDisplayMode(DisplayMode displayMode){
+
+        public WorkSpacePropertiesBuilder setTxtEndingMode(TxEndingMode txtEndingMode) {
+            this.workSpaceProperties.setTxEndingMode(txtEndingMode);
+            return this;
+        }
+
+        public WorkSpacePropertiesBuilder setDisplayMode(ConsoleDisplayMode displayMode) {
             this.workSpaceProperties.setDisplayMode(displayMode);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setTimeStampEnabled(boolean timeStampEnabled){
+
+        public WorkSpacePropertiesBuilder setTimeStampEnabled(boolean timeStampEnabled) {
             this.workSpaceProperties.setTimestampEnabled(timeStampEnabled);
             return this;
         }
         
-        public WorkSpaceProperties build(){
+        public WorkSpacePropertiesBuilder setFramingMode(FramingMode framingMode){
+            this.workSpaceProperties.setFramingMode(framingMode);
+            return this;
+        }
+        
+        public WorkSpaceProperties build() {
             return this.workSpaceProperties;
         }
     }
 
-    public WorkSpaceProperties(String name, String author, LocalDateTime createdAt, String path, String version, String description, SerialConfig serial, TxEndingMode txEndingMode, DisplayMode displayMode, boolean timestampEnabled, FramingMode framingMode) {
+    public WorkSpaceProperties(String name, String author, LocalDateTime createdAt, String path, String version, String description, SerialConfig serial, TxEndingMode txEndingMode, ConsoleDisplayMode displayMode, boolean timestampEnabled, FramingMode framingMode) {
         this.name = name;
         this.author = author;
         this.createdAt = createdAt;
@@ -113,7 +138,12 @@ public class WorkSpaceProperties implements Serializable {
         this.framingMode = framingMode;
     }
     
-    public WorkSpacePropertiesBuilder builder(){
+    /**
+     * Devuelve la instancia construida.
+     *
+     * @return workspace properties resultante
+     */
+    public WorkSpacePropertiesBuilder builder() {
         return new WorkSpacePropertiesBuilder();
     }
 
@@ -181,11 +211,11 @@ public class WorkSpaceProperties implements Serializable {
         this.txEndingMode = txEndingMode;
     }
 
-    public DisplayMode getDisplayMode() {
+    public ConsoleDisplayMode getDisplayMode() {
         return displayMode;
     }
 
-    public void setDisplayMode(DisplayMode displayMode) {
+    public void setDisplayMode(ConsoleDisplayMode displayMode) {
         this.displayMode = displayMode;
     }
 
@@ -208,7 +238,7 @@ public class WorkSpaceProperties implements Serializable {
     @Override
     public String toString() {
         return "WorkSpaceProperties{" + "name=" + name + ", author=" + author + ", createdAt=" + createdAt + ", path=" + path + ", version=" + version + ", description=" + description + ", serial=" + serial + ", txEndingMode=" + txEndingMode + ", displayMode=" + displayMode + ", timestampEnabled=" + timestampEnabled + ", framingMode=" + framingMode + '}';
-    }
+    }    
 
     /**
      * Constructor vacio para serialización con {@code ObjectMapper}
@@ -277,6 +307,11 @@ public class WorkSpaceProperties implements Serializable {
         public void setFlowControlMode(FlowControlMode flowControlMode) {
             this.flowControlMode = flowControlMode;
         }
+
+        @Override
+        public String toString() {
+            return "SerialConfig{" + "baudRate=" + baudRate + ", dataBits=" + dataBits + ", parityMode=" + parityMode + ", stopBits=" + stopBits + ", flowControlMode=" + flowControlMode + '}';
+        }                
 
     }
 
