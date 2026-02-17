@@ -24,6 +24,7 @@ import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -36,14 +37,19 @@ import javax.swing.border.Border;
  *
  * @author root
  */
-public class FrWorkSpaceWizard extends javax.swing.JFrame {
+public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
-
+    private WorkSpaceProperties initialWorkSpaceProperties;
+    private boolean accepted;
+    
     /**
      * Creates new form FrWorkSpaceWizard
      */
-    public FrWorkSpaceWizard() {
+    public FrWorkSpaceWizard(JFrame parent,WorkSpaceProperties initialWorkSpaceProperties) {
+        super(parent,"Nuevo espacio de trabajo",true);
+        this.initialWorkSpaceProperties = initialWorkSpaceProperties;
+        this.accepted = false;
         initComponents();
         this.configParityModeCombobox();
         this.configureStopbitsSpinnerModel();
@@ -52,6 +58,8 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.configureFramingModeComboBox();
         this.configureConsoleDisplayModeComboBox();
         this.setCurrentDateOnWorkApaceCreation();
+        this.setLocationRelativeTo(parent);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);        
     }
 
     /**
@@ -108,8 +116,13 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         buttonCreateWorkspace = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear nuevo espacio de trabajo");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                onClosingDialog(evt);
+            }
+        });
 
         panelGeneralWorkspaceDataParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
 
@@ -457,6 +470,7 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         buttonCancel.setText("Cancelar");
+        buttonCancel.addActionListener(this::onCancelButton);
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
@@ -493,7 +507,20 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    public void setAccepted(boolean accepted){
+        this.accepted = accepted;
+    }
+    
+    public boolean isAccepted(){
+        return this.accepted;
+    }
+    
+    public WorkSpaceProperties getWorkSpaceProperties(){
+        return this.initialWorkSpaceProperties;
+    }
+    
     private void chooseRootPathWorkspace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRootPathWorkspace
 
         final JFileChooser fileChooser = new JFileChooser();
@@ -551,23 +578,44 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         try {
             
-            WorkSpaceProperties workSpaceProperties = this.mapWorkSpaceProperties();
-            WorkSpaceFileStorer storer = new WorkSpaceFileStorer();
-            storer.save(workSpaceProperties);
-
+            //Se crea el objeto del espacio de trabajo
+            this.initialWorkSpaceProperties = this.mapWorkSpaceProperties();
+            
+            //El estado del Dialog es 'Aceptado'
+            this.accepted = this.initialWorkSpaceProperties != null;
+            
+            //Se guarda el archivo json con los datos del espacio de trabajo
+            WorkSpaceFileStorer storer = new WorkSpaceFileStorer();            
+            storer.save(this.initialWorkSpaceProperties);
+            
+            this.dispose();
+            
         } catch (IOException ioEx) {
-
+            
+            this.accepted = false;
             ioEx.printStackTrace(System.err);
             JOptionPane.showMessageDialog(this, "Error al crear espacio de trabajo: " + ioEx.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
         } catch (Exception ex) {
             
+            this.accepted = false;
             ex.printStackTrace(System.err);
             JOptionPane.showMessageDialog(this, "Error al crear espacio de trabajo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             
         }
 
     }//GEN-LAST:event_createWorkSpace
+
+    private void onCancelButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onCancelButton
+        // TODO add your handling code here:
+        this.accepted = false;
+        this.dispose();
+    }//GEN-LAST:event_onCancelButton
+
+    private void onClosingDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onClosingDialog
+        // TODO add your handling code here:
+        this.accepted = this.initialWorkSpaceProperties != null;
+    }//GEN-LAST:event_onClosingDialog
 
     private WorkSpaceProperties mapWorkSpaceProperties() {
 
