@@ -20,8 +20,11 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public Principal() {        
         initComponents();
+        this.lblWorkSpaceName.setText("_");
+        this.lblWorksSpaceVersion.setText("_");
+        this.lblWorksSpaceAuthor.setText("_");
     }
 
     /**
@@ -34,6 +37,14 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         panelPrincipalContainer = new javax.swing.JPanel();
+        panelInfoLabels = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lblWorkSpaceName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblWorksSpaceVersion = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblWorksSpaceAuthor = new javax.swing.JLabel();
+        PanelMainWorkSpaceContainer = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuFileNew = new javax.swing.JMenu();
@@ -42,16 +53,72 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tectuinno Serial Lab");
+        setPreferredSize(new java.awt.Dimension(700, 800));
+
+        panelInfoLabels.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel1.setText("Espacio:");
+
+        lblWorkSpaceName.setForeground(new java.awt.Color(0, 204, 255));
+        lblWorkSpaceName.setText("lbel_espacio");
+
+        jLabel2.setText("Version:");
+
+        lblWorksSpaceVersion.setForeground(new java.awt.Color(0, 204, 255));
+        lblWorksSpaceVersion.setText("lbl_version");
+
+        jLabel3.setText("Autor:");
+
+        lblWorksSpaceAuthor.setForeground(new java.awt.Color(0, 204, 255));
+        lblWorksSpaceAuthor.setText("lbl_Autor");
+
+        javax.swing.GroupLayout panelInfoLabelsLayout = new javax.swing.GroupLayout(panelInfoLabels);
+        panelInfoLabels.setLayout(panelInfoLabelsLayout);
+        panelInfoLabelsLayout.setHorizontalGroup(
+            panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLabelsLayout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblWorkSpaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblWorksSpaceAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblWorksSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 220, Short.MAX_VALUE))
+        );
+        panelInfoLabelsLayout.setVerticalGroup(
+            panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLabelsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblWorkSpaceName)
+                    .addComponent(jLabel2)
+                    .addComponent(lblWorksSpaceVersion)
+                    .addComponent(jLabel3)
+                    .addComponent(lblWorksSpaceAuthor))
+                .addContainerGap())
+        );
+
+        PanelMainWorkSpaceContainer.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
         panelPrincipalContainerLayout.setHorizontalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(panelInfoLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelMainWorkSpaceContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelPrincipalContainerLayout.setVerticalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalContainerLayout.createSequentialGroup()
+                .addComponent(PanelMainWorkSpaceContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelInfoLabels, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jMenuFile.setText("Archivo");
@@ -99,6 +166,7 @@ public class Principal extends javax.swing.JFrame {
             
             if(wizardDialog.isAccepted()){
                 this.workSpaceProperties = wizardDialog.getWorkSpaceProperties();
+                this.setupWorkSpaceInfoLabels();
                 System.out.println(this.workSpaceProperties.toString());
             }                        
             
@@ -107,13 +175,33 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openWorkSpaceWizard
     
+    /**
+     * inicializa los valores de la etiquetas ubicadas en la parte inferior del formulario con los datos
+     * del espacio de trabajo creado recientemente.
+     */
+    private void setupWorkSpaceInfoLabels(){
+        if(this.workSpaceProperties == null){
+            return;
+        }
+        this.lblWorkSpaceName.setText(this.workSpaceProperties.getName());
+        this.lblWorksSpaceAuthor.setText(this.workSpaceProperties.getAuthor());
+        this.lblWorksSpaceVersion.setText(this.workSpaceProperties.getVersion());
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelMainWorkSpaceContainer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuFileNew;
     private javax.swing.JMenuItem jMenuItemNewWorkSpace;
+    private javax.swing.JLabel lblWorkSpaceName;
+    private javax.swing.JLabel lblWorksSpaceAuthor;
+    private javax.swing.JLabel lblWorksSpaceVersion;
+    private javax.swing.JPanel panelInfoLabels;
     private javax.swing.JPanel panelPrincipalContainer;
     // End of variables declaration//GEN-END:variables
 }
