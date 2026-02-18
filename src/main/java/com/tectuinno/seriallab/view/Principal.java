@@ -4,6 +4,7 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.core.WorkSpaceProperties;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -14,6 +15,7 @@ import javax.swing.SwingUtilities;
 public class Principal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
+    private WorkSpaceProperties workSpaceProperties;
 
     /**
      * Creates new form Principal
@@ -38,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemNewWorkSpace = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tectuinno Serial Lab");
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
@@ -89,25 +91,20 @@ public class Principal extends javax.swing.JFrame {
      */
     private void openWorkSpaceWizard(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openWorkSpaceWizard
         
-        JFrame parent = this;
-        
-        SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run(){
-                try{
-                    
-                    FrWorkSpaceWizard frameWizar = new FrWorkSpaceWizard();
-                    frameWizar.setLocationRelativeTo(parent);
-                    frameWizar.setVisible(true);
-                    frameWizar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    
-                }catch(Exception ex){
-                    System.out.println("Error: " + ex.getMessage());
-                    ex.printStackTrace(System.err);
-                }
-            }
-        });
-        
+        try{
+            
+            WorkSpaceProperties initialProperties = new WorkSpaceProperties();
+            FrWorkSpaceWizard wizardDialog = new FrWorkSpaceWizard(this,initialProperties);
+            wizardDialog.setVisible(true);
+            
+            if(wizardDialog.isAccepted()){
+                this.workSpaceProperties = wizardDialog.getWorkSpaceProperties();
+                System.out.println(this.workSpaceProperties.toString());
+            }                        
+            
+        }catch(Exception ex){
+            ex.printStackTrace(System.err);
+        }
     }//GEN-LAST:event_openWorkSpaceWizard
     
     

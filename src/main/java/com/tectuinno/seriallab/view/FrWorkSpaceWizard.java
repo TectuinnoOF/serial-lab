@@ -4,22 +4,27 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.application.WorkSpaceFileStorer;
 import com.tectuinno.seriallab.core.ConsoleDisplayMode;
 import com.tectuinno.seriallab.core.FlowControlMode;
 import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
+import com.tectuinno.seriallab.core.WorkSpaceProperties;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -32,14 +37,19 @@ import javax.swing.border.Border;
  *
  * @author root
  */
-public class FrWorkSpaceWizard extends javax.swing.JFrame {
+public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
-
+    private WorkSpaceProperties initialWorkSpaceProperties;
+    private boolean accepted;
+    
     /**
      * Creates new form FrWorkSpaceWizard
      */
-    public FrWorkSpaceWizard() {
+    public FrWorkSpaceWizard(JFrame parent,WorkSpaceProperties initialWorkSpaceProperties) {
+        super(parent,"Nuevo espacio de trabajo",true);
+        this.initialWorkSpaceProperties = initialWorkSpaceProperties;
+        this.accepted = false;
         initComponents();
         this.configParityModeCombobox();
         this.configureStopbitsSpinnerModel();
@@ -48,6 +58,8 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.configureFramingModeComboBox();
         this.configureConsoleDisplayModeComboBox();
         this.setCurrentDateOnWorkApaceCreation();
+        this.setLocationRelativeTo(parent);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);        
     }
 
     /**
@@ -104,8 +116,13 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         buttonCreateWorkspace = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear nuevo espacio de trabajo");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                onClosingDialog(evt);
+            }
+        });
 
         panelGeneralWorkspaceDataParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
 
@@ -449,9 +466,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonCreateWorkspace.setText("Crear");
         buttonCreateWorkspace.setEnabled(false);
+        buttonCreateWorkspace.addActionListener(this::createWorkSpace);
 
         buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         buttonCancel.setText("Cancelar");
+        buttonCancel.addActionListener(this::onCancelButton);
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
@@ -488,7 +507,20 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    public void setAccepted(boolean accepted){
+        this.accepted = accepted;
+    }
+    
+    public boolean isAccepted(){
+        return this.accepted;
+    }
+    
+    public WorkSpaceProperties getWorkSpaceProperties(){
+        return this.initialWorkSpaceProperties;
+    }
+    
     private void chooseRootPathWorkspace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRootPathWorkspace
 
         final JFileChooser fileChooser = new JFileChooser();
@@ -503,11 +535,11 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.textFieldSourcePath.setText(file.getAbsolutePath());
     }//GEN-LAST:event_chooseRootPathWorkspace
 
-    private void setCurrentDateOnWorkApaceCreation(){        
+    private void setCurrentDateOnWorkApaceCreation() {
         LocalDate current = LocalDate.now();
         this.textFieldCreatedAt.setText(current.toString());
     }
-    
+
     /**
      * Verifica que el nombre del espacio de trabajo haya sido asignado
      *
@@ -536,8 +568,92 @@ public class FrWorkSpaceWizard extends javax.swing.JFrame {
         this.checkEmptieFieldsInWorkspaceData();
     }//GEN-LAST:event_verifyVersionWritten
 
-    
-    
+    /**
+     * Generación y creación de un nuevo espacio de trabajo.
+     *
+     * @param evt
+     */
+    private void createWorkSpace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createWorkSpace
+        // TODO add your handling code here:
+
+        try {
+            
+            //Se crea el objeto del espacio de trabajo
+            this.initialWorkSpaceProperties = this.mapWorkSpaceProperties();
+            
+            //El estado del Dialog es 'Aceptado'
+            this.accepted = this.initialWorkSpaceProperties != null;
+            
+            //Se guarda el archivo json con los datos del espacio de trabajo
+            WorkSpaceFileStorer storer = new WorkSpaceFileStorer();            
+            storer.save(this.initialWorkSpaceProperties);
+            
+            this.dispose();
+            
+        } catch (IOException ioEx) {
+            
+            this.accepted = false;
+            ioEx.printStackTrace(System.err);
+            JOptionPane.showMessageDialog(this, "Error al crear espacio de trabajo: " + ioEx.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception ex) {
+            
+            this.accepted = false;
+            ex.printStackTrace(System.err);
+            JOptionPane.showMessageDialog(this, "Error al crear espacio de trabajo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_createWorkSpace
+
+    private void onCancelButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onCancelButton
+        // TODO add your handling code here:
+        this.accepted = false;
+        this.dispose();
+    }//GEN-LAST:event_onCancelButton
+
+    private void onClosingDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onClosingDialog
+        // TODO add your handling code here:
+        this.accepted = this.initialWorkSpaceProperties != null;
+    }//GEN-LAST:event_onClosingDialog
+
+    private WorkSpaceProperties mapWorkSpaceProperties() {
+
+        try {
+
+            WorkSpaceProperties.SerialConfig serial = new WorkSpaceProperties.SerialConfig();
+            serial.setBaudRate(((Number) spinnerBaudRate.getValue()).intValue());
+            serial.setDataBits(((Number) spinnerDataBits.getValue()).intValue());
+            serial.setStopBits(((Number) spinnerStopBits.getValue()).doubleValue());
+            serial.setParityMode((ParityMode) comboBoxParityMode.getSelectedItem());
+            serial.setFlowControlMode((FlowControlMode) comboBoxFlowControlModel.getSelectedItem());
+
+            WorkSpaceProperties props = new WorkSpaceProperties().builder()
+                    .setName(textFieldWorkSpaceName.getText().trim())
+                    .setAuthor(textFieldAuthorsName.getText().trim())
+                    .setCreatedAt(LocalDateTime.now())
+                    .setPath(textFieldSourcePath.getText().trim())
+                    .setVersion(textFieldWorkSpaceVersion.getText().trim())
+                    .setDescription(this.textAreaDescriptionWorkspace.getText().isEmpty() ? "" : this.textAreaDescriptionWorkspace.getText())
+                    .setSerial(serial)
+                    .setTxtEndingMode((TxEndingMode) comboBoxTxEndingMode.getSelectedItem())
+                    .setDisplayMode((ConsoleDisplayMode) comboBoxConsoleDisplayMode.getSelectedItem())
+                    .setTimeStampEnabled(this.radioButtonEnableTimeStamp.isSelected())
+                    .setFramingMode((FramingMode) comboBoxFramingmode.getSelectedItem())
+                    .build();
+
+            System.out.println(props.toString());
+
+            return props;
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+    }
+
     /**
      * <summary>Función únicamente visual</summary>
      * <p>
