@@ -45,6 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblWorksSpaceAuthor = new javax.swing.JLabel();
         PanelMainWorkSpaceContainer = new javax.swing.JPanel();
+        panelUartTtyWorkSpace1 = new com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuFileNew = new javax.swing.JMenu();
@@ -88,7 +89,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblWorksSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 220, Short.MAX_VALUE))
+                .addGap(0, 320, Short.MAX_VALUE))
         );
         panelInfoLabelsLayout.setVerticalGroup(
             panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,6 +106,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         PanelMainWorkSpaceContainer.setLayout(new java.awt.BorderLayout());
+        PanelMainWorkSpaceContainer.add(panelUartTtyWorkSpace1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
@@ -203,5 +205,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblWorksSpaceVersion;
     private javax.swing.JPanel panelInfoLabels;
     private javax.swing.JPanel panelPrincipalContainer;
+    private com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace panelUartTtyWorkSpace1;
     // End of variables declaration//GEN-END:variables
 }
