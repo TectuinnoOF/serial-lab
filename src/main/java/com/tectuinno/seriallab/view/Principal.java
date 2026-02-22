@@ -88,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblWorksSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 220, Short.MAX_VALUE))
+                .addGap(0, 320, Short.MAX_VALUE))
         );
         panelInfoLabelsLayout.setVerticalGroup(
             panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,6 +174,16 @@ public class Principal extends javax.swing.JFrame {
             ex.printStackTrace(System.err);
         }
     }//GEN-LAST:event_openWorkSpaceWizard
+    
+    private void settingUpFromWorkspaceModel(){
+        
+        
+        
+    }
+    
+    private void scanForComDevices(){
+        
+    }
     
     /**
      * inicializa los valores de la etiquetas ubicadas en la parte inferior del formulario con los datos

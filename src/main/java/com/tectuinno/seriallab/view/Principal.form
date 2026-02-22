@@ -115,7 +115,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblWorksSpaceVersion" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="220" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="320" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
