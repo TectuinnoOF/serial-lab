@@ -14,7 +14,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      * Creates new form PanelUartTtyWorkSpace
      */
     public PanelUartTtyWorkSpace() {
-        initComponents();
+        initComponents();        
     }
 
     /**
@@ -41,14 +41,17 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         jSpinnerStopBits = new javax.swing.JSpinner();
         jComboBoxFlowControl = new javax.swing.JComboBox<>();
         buttonConnect = new javax.swing.JButton();
-        panelPrincipalContainer = new javax.swing.JPanel();
-        panelButtonsTabSelector = new javax.swing.JPanel();
-        buttonTabConsole = new javax.swing.JButton();
-        buttonTabPackets = new javax.swing.JButton();
-        buttonTabCharts = new javax.swing.JButton();
-        buttonTabLogs = new javax.swing.JButton();
-        panelWorkingComponentContainer = new javax.swing.JPanel();
-        panelRightToolsContainer = new javax.swing.JPanel();
+        splitPanePrincipalWorkingZone = new javax.swing.JSplitPane();
+        panelWorkingZoneContainer = new javax.swing.JPanel();
+        panelToolsWorkingZoneContainer = new javax.swing.JPanel();
+
+        addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                formAncestorResized(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -137,103 +140,40 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelPrincipalContainer.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        splitPanePrincipalWorkingZone.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        splitPanePrincipalWorkingZone.setDividerLocation(550);
 
-        buttonTabConsole.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
-        buttonTabConsole.setText("Consola");
+        panelWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+        splitPanePrincipalWorkingZone.setLeftComponent(panelWorkingZoneContainer);
 
-        buttonTabPackets.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
-        buttonTabPackets.setText("Packets");
-
-        buttonTabCharts.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
-        buttonTabCharts.setText("Charts");
-
-        buttonTabLogs.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
-        buttonTabLogs.setText("Logs");
-
-        javax.swing.GroupLayout panelButtonsTabSelectorLayout = new javax.swing.GroupLayout(panelButtonsTabSelector);
-        panelButtonsTabSelector.setLayout(panelButtonsTabSelectorLayout);
-        panelButtonsTabSelectorLayout.setHorizontalGroup(
-            panelButtonsTabSelectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelButtonsTabSelectorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buttonTabConsole)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonTabPackets)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonTabCharts, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonTabLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelButtonsTabSelectorLayout.setVerticalGroup(
-            panelButtonsTabSelectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelButtonsTabSelectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(buttonTabConsole)
-                .addComponent(buttonTabPackets)
-                .addComponent(buttonTabCharts)
-                .addComponent(buttonTabLogs))
-        );
-
-        panelWorkingComponentContainer.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
-        panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
-        panelPrincipalContainerLayout.setHorizontalGroup(
-            panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelButtonsTabSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelWorkingComponentContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panelPrincipalContainerLayout.setVerticalGroup(
-            panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
-                .addComponent(panelButtonsTabSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelWorkingComponentContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelRightToolsContainer.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout panelRightToolsContainerLayout = new javax.swing.GroupLayout(panelRightToolsContainer);
-        panelRightToolsContainer.setLayout(panelRightToolsContainerLayout);
-        panelRightToolsContainerLayout.setHorizontalGroup(
-            panelRightToolsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
-        );
-        panelRightToolsContainerLayout.setVerticalGroup(
-            panelRightToolsContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        panelToolsWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+        splitPanePrincipalWorkingZone.setRightComponent(panelToolsWorkingZoneContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelPrincipalContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRightToolsContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(splitPanePrincipalWorkingZone)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelRightToolsContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelPrincipalContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(splitPanePrincipalWorkingZone))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
+        // TODO add your handling code here:
+        this.splitPanePrincipalWorkingZone.setDividerLocation(this.getWidth() - 250);
+    }//GEN-LAST:event_formAncestorResized
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonConnect;
     private javax.swing.JButton buttonScanForComDevises;
-    private javax.swing.JButton buttonTabCharts;
-    private javax.swing.JButton buttonTabConsole;
-    private javax.swing.JButton buttonTabLogs;
-    private javax.swing.JButton buttonTabPackets;
     private javax.swing.JComboBox<String> jCmbAviablePorts;
     private javax.swing.JComboBox<String> jComboBoxFlowControl;
     private javax.swing.JComboBox<String> jComboBoxParityMode;
@@ -247,9 +187,8 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     private javax.swing.JLabel lblForSpinnerBaudRate;
     private javax.swing.JLabel lblForSpinnerDataBits;
     private javax.swing.JLabel lblPortDesc;
-    private javax.swing.JPanel panelButtonsTabSelector;
-    private javax.swing.JPanel panelPrincipalContainer;
-    private javax.swing.JPanel panelRightToolsContainer;
-    private javax.swing.JPanel panelWorkingComponentContainer;
+    private javax.swing.JPanel panelToolsWorkingZoneContainer;
+    private javax.swing.JPanel panelWorkingZoneContainer;
+    private javax.swing.JSplitPane splitPanePrincipalWorkingZone;
     // End of variables declaration//GEN-END:variables
 }

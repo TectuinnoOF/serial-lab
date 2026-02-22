@@ -4,6 +4,8 @@
  */
 package com.tectuinno.seriallab.view.uart_com.components;
 
+import javax.swing.JSplitPane;
+
 /**
  *
  * @author root
@@ -31,22 +33,39 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         panelSendingConfigParametersContainer = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         radioButtonAsciiMode = new javax.swing.JRadioButton();
-        radioButtonAsciiMode1 = new javax.swing.JRadioButton();
-        radioButtonAsciiMode2 = new javax.swing.JRadioButton();
+        radioButtonHexMode = new javax.swing.JRadioButton();
+        radioButtonBothMode = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioButtonTimeStampOn = new javax.swing.JRadioButton();
+        radioButtonTimeStampOff = new javax.swing.JRadioButton();
+        buttonCleanAllMessages = new javax.swing.JButton();
+        splitPaneChatContainer = new javax.swing.JSplitPane();
+        panelAllMessagesContainer = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textPaneAllMessages = new javax.swing.JTextPane();
+        panelWrittingZoneContainer = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textAreaMessageToSend = new javax.swing.JTextArea();
+        buttonSendMessage = new javax.swing.JButton();
+        lblForTextFieldFinalCharacter = new javax.swing.JLabel();
+        textFieldFinalCharacterLine = new javax.swing.JTextField();
+        lblForSpinnerTiming = new javax.swing.JLabel();
+        jSpinnerTimingSend = new javax.swing.JSpinner();
+        toggleEnableTimingSending = new javax.swing.JToggleButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tx Mod", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 10))); // NOI18N
 
+        txSendModeButtonGroup.add(radioButtonAsciiMode);
         radioButtonAsciiMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
         radioButtonAsciiMode.setText("ASCII");
 
-        radioButtonAsciiMode1.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
-        radioButtonAsciiMode1.setText("Hex");
+        txSendModeButtonGroup.add(radioButtonHexMode);
+        radioButtonHexMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
+        radioButtonHexMode.setText("Hex");
 
-        radioButtonAsciiMode2.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
-        radioButtonAsciiMode2.setText("Ambos");
+        txSendModeButtonGroup.add(radioButtonBothMode);
+        radioButtonBothMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
+        radioButtonBothMode.setText("Ambos");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -55,41 +74,44 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(radioButtonAsciiMode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioButtonAsciiMode1)
+                .addComponent(radioButtonHexMode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioButtonAsciiMode2))
+                .addComponent(radioButtonBothMode))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(radioButtonAsciiMode)
-                .addComponent(radioButtonAsciiMode1)
-                .addComponent(radioButtonAsciiMode2))
+                .addComponent(radioButtonHexMode)
+                .addComponent(radioButtonBothMode))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Time Stamp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 10))); // NOI18N
 
-        jRadioButton1.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
-        jRadioButton1.setText("On");
+        radioButtonTimeStampOn.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
+        radioButtonTimeStampOn.setText("On");
 
-        jRadioButton2.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
-        jRadioButton2.setText("Off");
+        radioButtonTimeStampOff.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
+        radioButtonTimeStampOff.setText("Off");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jRadioButton1)
+                .addComponent(radioButtonTimeStampOn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2))
+                .addComponent(radioButtonTimeStampOff))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jRadioButton1)
-                .addComponent(jRadioButton2))
+                .addComponent(radioButtonTimeStampOn)
+                .addComponent(radioButtonTimeStampOff))
         );
+
+        buttonCleanAllMessages.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
+        buttonCleanAllMessages.setText("Limpiar");
 
         javax.swing.GroupLayout panelSendingConfigParametersContainerLayout = new javax.swing.GroupLayout(panelSendingConfigParametersContainer);
         panelSendingConfigParametersContainer.setLayout(panelSendingConfigParametersContainerLayout);
@@ -99,39 +121,144 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 265, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonCleanAllMessages)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelSendingConfigParametersContainerLayout.setVerticalGroup(
             panelSendingConfigParametersContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSendingConfigParametersContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonCleanAllMessages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        splitPaneChatContainer.setDividerLocation(250);
+        splitPaneChatContainer.setDividerSize(1);
+        splitPaneChatContainer.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        splitPaneChatContainer.setName(""); // NOI18N
+
+        jScrollPane2.setViewportView(textPaneAllMessages);
+
+        javax.swing.GroupLayout panelAllMessagesContainerLayout = new javax.swing.GroupLayout(panelAllMessagesContainer);
+        panelAllMessagesContainer.setLayout(panelAllMessagesContainerLayout);
+        panelAllMessagesContainerLayout.setHorizontalGroup(
+            panelAllMessagesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+        );
+        panelAllMessagesContainerLayout.setVerticalGroup(
+            panelAllMessagesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+        );
+
+        splitPaneChatContainer.setTopComponent(panelAllMessagesContainer);
+
+        textAreaMessageToSend.setColumns(20);
+        textAreaMessageToSend.setRows(5);
+        jScrollPane3.setViewportView(textAreaMessageToSend);
+
+        buttonSendMessage.setText("Enviar");
+
+        lblForTextFieldFinalCharacter.setText("Caracter Final");
+
+        textFieldFinalCharacterLine.setText("jTextField1");
+
+        lblForSpinnerTiming.setText("intervalo");
+
+        toggleEnableTimingSending.setText("jToggleButton1");
+
+        javax.swing.GroupLayout panelWrittingZoneContainerLayout = new javax.swing.GroupLayout(panelWrittingZoneContainer);
+        panelWrittingZoneContainer.setLayout(panelWrittingZoneContainerLayout);
+        panelWrittingZoneContainerLayout.setHorizontalGroup(
+            panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelWrittingZoneContainerLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelWrittingZoneContainerLayout.createSequentialGroup()
+                        .addComponent(lblForTextFieldFinalCharacter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFieldFinalCharacterLine, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                    .addGroup(panelWrittingZoneContainerLayout.createSequentialGroup()
+                        .addComponent(lblForSpinnerTiming)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerTimingSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toggleEnableTimingSending, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                    .addComponent(buttonSendMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelWrittingZoneContainerLayout.setVerticalGroup(
+            panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelWrittingZoneContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblForTextFieldFinalCharacter)
+                    .addComponent(textFieldFinalCharacterLine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblForSpinnerTiming)
+                    .addComponent(jSpinnerTimingSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toggleEnableTimingSending))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonSendMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        splitPaneChatContainer.setRightComponent(panelWrittingZoneContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelSendingConfigParametersContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(splitPaneChatContainer)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelSendingConfigParametersContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 361, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splitPaneChatContainer))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Se expone el contenedor actual del area de mensajes para manipular sus propiedades
+     * desde el contenedor padre
+     * @return 
+     */
+    public JSplitPane getSplitPaneChatContainer(){
+        return this.splitPaneChatContainer;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCleanAllMessages;
+    private javax.swing.JButton buttonSendMessage;
     private javax.swing.ButtonGroup configTimeStampButtonGroup;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinnerTimingSend;
+    private javax.swing.JLabel lblForSpinnerTiming;
+    private javax.swing.JLabel lblForTextFieldFinalCharacter;
+    private javax.swing.JPanel panelAllMessagesContainer;
     private javax.swing.JPanel panelSendingConfigParametersContainer;
+    private javax.swing.JPanel panelWrittingZoneContainer;
     private javax.swing.JRadioButton radioButtonAsciiMode;
-    private javax.swing.JRadioButton radioButtonAsciiMode1;
-    private javax.swing.JRadioButton radioButtonAsciiMode2;
+    private javax.swing.JRadioButton radioButtonBothMode;
+    private javax.swing.JRadioButton radioButtonHexMode;
+    private javax.swing.JRadioButton radioButtonTimeStampOff;
+    private javax.swing.JRadioButton radioButtonTimeStampOn;
+    private javax.swing.JSplitPane splitPaneChatContainer;
+    private javax.swing.JTextArea textAreaMessageToSend;
+    private javax.swing.JTextField textFieldFinalCharacterLine;
+    private javax.swing.JTextPane textPaneAllMessages;
+    private javax.swing.JToggleButton toggleEnableTimingSending;
     private javax.swing.ButtonGroup txSendModeButtonGroup;
     // End of variables declaration//GEN-END:variables
 }
