@@ -14,7 +14,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      * Creates new form PanelUartTtyWorkSpace
      */
     public PanelUartTtyWorkSpace() {
-        initComponents();
+        initComponents();        
     }
 
     /**
@@ -29,20 +29,38 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lblPortDesc = new javax.swing.JLabel();
         jCmbAviablePorts = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        buttonScanForComDevises = new javax.swing.JButton();
         lblForSpinnerBaudRate = new javax.swing.JLabel();
         jSpinnerBaudRate = new javax.swing.JSpinner();
         lblForSpinnerDataBits = new javax.swing.JLabel();
         jSpinnerDataBits = new javax.swing.JSpinner();
         lblForComboBoxParityMode = new javax.swing.JLabel();
         jComboBoxParityMode = new javax.swing.JComboBox<>();
+        lblForJSpinnerStopBits = new javax.swing.JLabel();
+        lblForComboBoxFlowControl = new javax.swing.JLabel();
+        jSpinnerStopBits = new javax.swing.JSpinner();
+        jComboBoxFlowControl = new javax.swing.JComboBox<>();
+        buttonConnect = new javax.swing.JButton();
+        splitPanePrincipalWorkingZone = new javax.swing.JSplitPane();
+        panelWorkingZoneContainer = new javax.swing.JPanel();
+        panelToolsWorkingZoneContainer = new javax.swing.JPanel();
+
+        addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                formAncestorResized(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblPortDesc.setText("Puerto:");
 
-        jCmbAviablePorts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCmbAviablePorts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "String" }));
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setText("scan");
+        buttonScanForComDevises.setBackground(new java.awt.Color(0, 153, 153));
+        buttonScanForComDevises.setText("scan");
 
         lblForSpinnerBaudRate.setText("Baud");
 
@@ -52,29 +70,50 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         jComboBoxParityMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblForJSpinnerStopBits.setText("Stop:");
+
+        lblForComboBoxFlowControl.setText("Flow Control:");
+
+        jComboBoxFlowControl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        buttonConnect.setText("Conectar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPortDesc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCmbAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblForSpinnerBaudRate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblForSpinnerDataBits)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblForComboBoxParityMode)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxParityMode, 0, 137, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblPortDesc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCmbAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonScanForComDevises)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblForSpinnerBaudRate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblForSpinnerDataBits)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblForComboBoxParityMode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxParityMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblForJSpinnerStopBits)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblForComboBoxFlowControl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFlowControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonConnect)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -84,41 +123,72 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPortDesc)
                     .addComponent(jCmbAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(buttonScanForComDevises)
                     .addComponent(lblForSpinnerBaudRate)
                     .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblForSpinnerDataBits)
                     .addComponent(jSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblForComboBoxParityMode)
                     .addComponent(jComboBoxParityMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblForJSpinnerStopBits)
+                    .addComponent(lblForComboBoxFlowControl)
+                    .addComponent(jSpinnerStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxFlowControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonConnect))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        splitPanePrincipalWorkingZone.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        splitPanePrincipalWorkingZone.setDividerLocation(550);
+
+        panelWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+        splitPanePrincipalWorkingZone.setLeftComponent(panelWorkingZoneContainer);
+
+        panelToolsWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+        splitPanePrincipalWorkingZone.setRightComponent(panelToolsWorkingZoneContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(splitPanePrincipalWorkingZone)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 412, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splitPanePrincipalWorkingZone))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
+        // TODO add your handling code here:
+        this.splitPanePrincipalWorkingZone.setDividerLocation(this.getWidth() - 250);
+    }//GEN-LAST:event_formAncestorResized
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonConnect;
+    private javax.swing.JButton buttonScanForComDevises;
     private javax.swing.JComboBox<String> jCmbAviablePorts;
+    private javax.swing.JComboBox<String> jComboBoxFlowControl;
     private javax.swing.JComboBox<String> jComboBoxParityMode;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerBaudRate;
     private javax.swing.JSpinner jSpinnerDataBits;
+    private javax.swing.JSpinner jSpinnerStopBits;
+    private javax.swing.JLabel lblForComboBoxFlowControl;
     private javax.swing.JLabel lblForComboBoxParityMode;
+    private javax.swing.JLabel lblForJSpinnerStopBits;
     private javax.swing.JLabel lblForSpinnerBaudRate;
     private javax.swing.JLabel lblForSpinnerDataBits;
     private javax.swing.JLabel lblPortDesc;
+    private javax.swing.JPanel panelToolsWorkingZoneContainer;
+    private javax.swing.JPanel panelWorkingZoneContainer;
+    private javax.swing.JSplitPane splitPanePrincipalWorkingZone;
     // End of variables declaration//GEN-END:variables
 }
