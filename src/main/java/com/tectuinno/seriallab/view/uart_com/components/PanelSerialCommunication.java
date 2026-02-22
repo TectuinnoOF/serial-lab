@@ -53,6 +53,14 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         jSpinnerTimingSend = new javax.swing.JSpinner();
         toggleEnableTimingSending = new javax.swing.JToggleButton();
 
+        addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                formAncestorResized(evt);
+            }
+        });
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tx Mod", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 10))); // NOI18N
 
         txSendModeButtonGroup.add(radioButtonAsciiMode);
@@ -192,7 +200,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         );
         panelWrittingZoneContainerLayout.setVerticalGroup(
             panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelWrittingZoneContainerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelWrittingZoneContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -225,6 +233,12 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
                 .addComponent(splitPaneChatContainer))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
+        
+        this.splitPaneChatContainer.setDividerLocation(250 - this.getHeight());
+        
+    }//GEN-LAST:event_formAncestorResized
 
     /**
      * Se expone el contenedor actual del area de mensajes para manipular sus propiedades

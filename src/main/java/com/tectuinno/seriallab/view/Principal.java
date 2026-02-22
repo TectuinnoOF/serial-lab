@@ -175,6 +175,16 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openWorkSpaceWizard
     
+    private void settingUpFromWorkspaceModel(){
+        
+        
+        
+    }
+    
+    private void scanForComDevices(){
+        
+    }
+    
     /**
      * inicializa los valores de la etiquetas ubicadas en la parte inferior del formulario con los datos
      * del espacio de trabajo creado recientemente.

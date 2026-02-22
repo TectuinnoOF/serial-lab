@@ -57,7 +57,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         lblPortDesc.setText("Puerto:");
 
-        jCmbAviablePorts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCmbAviablePorts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "String" }));
 
         buttonScanForComDevises.setBackground(new java.awt.Color(0, 153, 153));
         buttonScanForComDevises.setText("scan");
