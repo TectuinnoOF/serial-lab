@@ -5,8 +5,11 @@
 package com.tectuinno.seriallab.view.uart_com;
 
 import com.tectuinno.seriallab.application.SerialPortService;
+import com.tectuinno.seriallab.core.FlowControlMode;
+import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.PortInfo;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +24,9 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      * Creates new form PanelUartTtyWorkSpace
      */
     public PanelUartTtyWorkSpace() {
-        initComponents();        
+        initComponents();
+        this.configureFlowControlModeCombobox();
+        this.configureParityModeCombobox();
     }
 
     /**
@@ -75,13 +80,9 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         lblForComboBoxParityMode.setText("Parity:");
 
-        jComboBoxParityMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         lblForJSpinnerStopBits.setText("Stop:");
 
         lblForComboBoxFlowControl.setText("Flow Control:");
-
-        jComboBoxFlowControl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         buttonConnect.setText("Conectar");
 
@@ -184,6 +185,14 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         this.configureCmbAviablePorts();
     }//GEN-LAST:event_buttonScanForComDevisesActionPerformed
 
+    private void configureFlowControlModeCombobox(){
+        this.jComboBoxFlowControl.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));
+    }
+    
+    private void configureParityModeCombobox(){
+        this.jComboBoxParityMode.setModel(new DefaultComboBoxModel<>(ParityMode.values()));
+    }
+    
     private void configureCmbAviablePorts(){
         
         List<PortInfo> current = SerialPortService.listAvaiablePorts();                                
@@ -205,8 +214,8 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     private javax.swing.JButton buttonConnect;
     private javax.swing.JButton buttonScanForComDevises;
     private javax.swing.JComboBox<String> jCmbListAviablePorts;
-    private javax.swing.JComboBox<String> jComboBoxFlowControl;
-    private javax.swing.JComboBox<String> jComboBoxParityMode;
+    private javax.swing.JComboBox<FlowControlMode> jComboBoxFlowControl;
+    private javax.swing.JComboBox<ParityMode> jComboBoxParityMode;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerBaudRate;
     private javax.swing.JSpinner jSpinnerDataBits;
