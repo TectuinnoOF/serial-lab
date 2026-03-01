@@ -83,7 +83,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="PanelMainWorkSpaceContainer" max="32767" attributes="0"/>
+                  <Component id="PanelMainWorkSpaceContainer" pref="513" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="panelInfoLabels" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
@@ -181,6 +181,15 @@
         <Container class="javax.swing.JPanel" name="PanelMainWorkSpaceContainer">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+          <SubComponents>
+            <Component class="com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace" name="panelUartTtyWorkSpace1">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
