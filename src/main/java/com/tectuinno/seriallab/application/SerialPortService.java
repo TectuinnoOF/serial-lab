@@ -22,7 +22,7 @@ public class SerialPortService {
     
     /**
      * Listado de todos los puertos conectados y disponibles.
-     * los puertos disponibles se guardan en un {}
+     * los puertos disponibles se guardan en un {@code ArrayList<PortInfo>()}
      */
     public static List<PortInfo> listAvaiablePorts(){
         

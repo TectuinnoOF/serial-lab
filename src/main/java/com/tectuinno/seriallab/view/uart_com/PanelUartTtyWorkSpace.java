@@ -4,12 +4,19 @@
  */
 package com.tectuinno.seriallab.view.uart_com;
 
+import com.tectuinno.seriallab.application.SerialPortService;
+import com.tectuinno.seriallab.core.PortInfo;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author root
  */
 public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
-
+    
+    private List<PortInfo> currentAviablePortsList;
+    
     /**
      * Creates new form PanelUartTtyWorkSpace
      */
@@ -28,7 +35,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         lblPortDesc = new javax.swing.JLabel();
-        jCmbAviablePorts = new javax.swing.JComboBox<>();
+        jCmbListAviablePorts = new javax.swing.JComboBox<>();
         buttonScanForComDevises = new javax.swing.JButton();
         lblForSpinnerBaudRate = new javax.swing.JLabel();
         jSpinnerBaudRate = new javax.swing.JSpinner();
@@ -43,6 +50,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         buttonConnect = new javax.swing.JButton();
         splitPanePrincipalWorkingZone = new javax.swing.JSplitPane();
         panelWorkingZoneContainer = new javax.swing.JPanel();
+        panelSerialCommunication1 = new com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication();
         panelToolsWorkingZoneContainer = new javax.swing.JPanel();
 
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -57,10 +65,9 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         lblPortDesc.setText("Puerto:");
 
-        jCmbAviablePorts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "String" }));
-
         buttonScanForComDevises.setBackground(new java.awt.Color(0, 153, 153));
         buttonScanForComDevises.setText("scan");
+        buttonScanForComDevises.addActionListener(this::buttonScanForComDevisesActionPerformed);
 
         lblForSpinnerBaudRate.setText("Baud");
 
@@ -88,7 +95,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblPortDesc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCmbAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCmbListAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonScanForComDevises)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -122,7 +129,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPortDesc)
-                    .addComponent(jCmbAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCmbListAviablePorts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonScanForComDevises)
                     .addComponent(lblForSpinnerBaudRate)
                     .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,6 +151,8 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         splitPanePrincipalWorkingZone.setDividerLocation(550);
 
         panelWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+        panelWorkingZoneContainer.add(panelSerialCommunication1, java.awt.BorderLayout.CENTER);
+
         splitPanePrincipalWorkingZone.setLeftComponent(panelWorkingZoneContainer);
 
         panelToolsWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
@@ -161,7 +170,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(splitPanePrincipalWorkingZone))
+                .addComponent(splitPanePrincipalWorkingZone, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -170,11 +179,32 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         this.splitPanePrincipalWorkingZone.setDividerLocation(this.getWidth() - 250);
     }//GEN-LAST:event_formAncestorResized
 
+    private void buttonScanForComDevisesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonScanForComDevisesActionPerformed
+        // TODO add your handling code here:
+        this.configureCmbAviablePorts();
+    }//GEN-LAST:event_buttonScanForComDevisesActionPerformed
+
+    private void configureCmbAviablePorts(){
+        
+        List<PortInfo> current = SerialPortService.listAvaiablePorts();                                
+        this.jCmbListAviablePorts.removeAllItems();
+        
+        if(current == null || current.isEmpty()){
+            this.jCmbListAviablePorts.addItem("Sin dispositivos...");
+            JOptionPane.showMessageDialog(this, "No hay dispositivos connectados", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        for(PortInfo pi: current){
+            this.jCmbListAviablePorts.addItem(pi.toString());
+        }                
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonConnect;
     private javax.swing.JButton buttonScanForComDevises;
-    private javax.swing.JComboBox<String> jCmbAviablePorts;
+    private javax.swing.JComboBox<String> jCmbListAviablePorts;
     private javax.swing.JComboBox<String> jComboBoxFlowControl;
     private javax.swing.JComboBox<String> jComboBoxParityMode;
     private javax.swing.JPanel jPanel1;
@@ -187,6 +217,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     private javax.swing.JLabel lblForSpinnerBaudRate;
     private javax.swing.JLabel lblForSpinnerDataBits;
     private javax.swing.JLabel lblPortDesc;
+    private com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication panelSerialCommunication1;
     private javax.swing.JPanel panelToolsWorkingZoneContainer;
     private javax.swing.JPanel panelWorkingZoneContainer;
     private javax.swing.JSplitPane splitPanePrincipalWorkingZone;
