@@ -199,7 +199,7 @@
     <Container class="javax.swing.JSplitPane" name="splitPaneChatContainer">
       <Properties>
         <Property name="dividerLocation" type="int" value="250"/>
-        <Property name="dividerSize" type="int" value="1"/>
+        <Property name="dividerSize" type="int" value="3"/>
         <Property name="orientation" type="int" value="0"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
@@ -320,9 +320,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textFieldFinalCharacterLine">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jTextField1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblForSpinnerTiming">
               <Properties>
@@ -333,7 +330,7 @@
             </Component>
             <Component class="javax.swing.JToggleButton" name="toggleEnableTimingSending">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+                <Property name="text" type="java.lang.String" value="Activar"/>
               </Properties>
             </Component>
           </SubComponents>

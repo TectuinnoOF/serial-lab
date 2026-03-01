@@ -144,7 +144,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         );
 
         splitPaneChatContainer.setDividerLocation(250);
-        splitPaneChatContainer.setDividerSize(1);
+        splitPaneChatContainer.setDividerSize(3);
         splitPaneChatContainer.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         splitPaneChatContainer.setName(""); // NOI18N
 
@@ -171,11 +171,9 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
 
         lblForTextFieldFinalCharacter.setText("Caracter Final");
 
-        textFieldFinalCharacterLine.setText("jTextField1");
-
         lblForSpinnerTiming.setText("intervalo");
 
-        toggleEnableTimingSending.setText("jToggleButton1");
+        toggleEnableTimingSending.setText("Activar");
 
         javax.swing.GroupLayout panelWrittingZoneContainerLayout = new javax.swing.GroupLayout(panelWrittingZoneContainer);
         panelWrittingZoneContainer.setLayout(panelWrittingZoneContainerLayout);
