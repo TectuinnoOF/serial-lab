@@ -96,9 +96,11 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Time Stamp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 10))); // NOI18N
 
+        configTimeStampButtonGroup.add(radioButtonTimeStampOn);
         radioButtonTimeStampOn.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
         radioButtonTimeStampOn.setText("On");
 
+        configTimeStampButtonGroup.add(radioButtonTimeStampOff);
         radioButtonTimeStampOff.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
         radioButtonTimeStampOff.setText("Off");
 
@@ -143,9 +145,10 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        splitPaneChatContainer.setDividerLocation(250);
-        splitPaneChatContainer.setDividerSize(3);
+        splitPaneChatContainer.setDividerLocation(290);
+        splitPaneChatContainer.setDividerSize(10);
         splitPaneChatContainer.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        splitPaneChatContainer.setLastDividerLocation(290);
         splitPaneChatContainer.setName(""); // NOI18N
 
         jScrollPane2.setViewportView(textPaneAllMessages);
@@ -158,7 +161,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         );
         panelAllMessagesContainerLayout.setVerticalGroup(
             panelAllMessagesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
         );
 
         splitPaneChatContainer.setTopComponent(panelAllMessagesContainer);
@@ -228,13 +231,13 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelSendingConfigParametersContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(splitPaneChatContainer))
+                .addComponent(splitPaneChatContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
         
-        this.splitPaneChatContainer.setDividerLocation(250 - this.getHeight());
+        this.splitPaneChatContainer.setDividerLocation(290 - this.getHeight());
         
     }//GEN-LAST:event_formAncestorResized
 

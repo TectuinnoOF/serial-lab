@@ -5,6 +5,17 @@
     <artifactId>seriallab</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+    
+    <name>Tectuinno-serial-lab</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+        <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
+        <build.timestamp>${maven.build.timestamp}</build.timestamp>
+        <exec.mainClass>com.tectuinno.seriallab.Seriallab</exec.mainClass>
+    </properties>
+    
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
         <dependency>
@@ -36,17 +47,27 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
-                <executions>
+                <!--executions>
                     <execution>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                         <id>jar</id>
                     </execution>
-                </executions>
+                </executions-->
                 <configuration>
-                    <foo>bar</foo>
-                </configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.tectuinno.seriallab.Seriallab</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>          
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -59,11 +80,8 @@
                         </goals>
                         <id>clean</id>
                     </execution>
-                </executions>
-                <configuration>
-                    <foo>bar</foo>
-                </configuration>
-            </plugin>
+                </executions>                
+            </plugin>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -73,12 +91,36 @@
                     <nohelp>true</nohelp>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.tectuinno.seriallab.Seriallab</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>Tectuinno-Serial-lab${project.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>                    
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-    <properties>
+    <!--properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
-        <exec.mainClass>com.tectuinno.seriallab.Seriallab</exec.mainClass>
-    </properties>
+        <maven.compiler.release>17</maven.compiler.release>        
+    </properties-->
     
 </project>
