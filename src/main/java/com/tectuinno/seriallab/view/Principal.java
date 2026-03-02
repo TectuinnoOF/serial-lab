@@ -4,23 +4,34 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.core.ConsoleDisplayMode;
+import com.tectuinno.seriallab.core.FramingMode;
+import com.tectuinno.seriallab.core.TxEndingMode;
 import com.tectuinno.seriallab.core.WorkSpaceProperties;
+import com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace;
+import com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication;
+import java.awt.BorderLayout;
+import java.time.LocalDateTime;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
  * Formulario principal
+ *
  * @author root
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
     private WorkSpaceProperties workSpaceProperties;
+    private PanelUartTtyWorkSpace panelUartTtyWorkSpace;
+    private PanelSerialCommunication panelSerialCommunication;
 
     /**
      * Creates new form Principal
      */
-    public Principal() {        
+    public Principal() {
         initComponents();
         this.lblWorkSpaceName.setText("_");
         this.lblWorksSpaceVersion.setText("_");
@@ -45,16 +56,16 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblWorksSpaceAuthor = new javax.swing.JLabel();
         PanelMainWorkSpaceContainer = new javax.swing.JPanel();
-        panelUartTtyWorkSpace1 = new com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuFileNew = new javax.swing.JMenu();
         jMenuItemNewWorkSpace = new javax.swing.JMenuItem();
+        jMenuItemBlankWorkSpace = new javax.swing.JMenuItem();
+        jMenuItemCloseCurrentWorkSpace = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tectuinno Serial Lab");
-        setPreferredSize(new java.awt.Dimension(700, 800));
 
         panelInfoLabels.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -89,7 +100,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblWorksSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 320, Short.MAX_VALUE))
+                .addGap(0, 220, Short.MAX_VALUE))
         );
         panelInfoLabelsLayout.setVerticalGroup(
             panelInfoLabelsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +117,6 @@ public class Principal extends javax.swing.JFrame {
         );
 
         PanelMainWorkSpaceContainer.setLayout(new java.awt.BorderLayout());
-        PanelMainWorkSpaceContainer.add(panelUartTtyWorkSpace1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
         panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
@@ -118,7 +128,7 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipalContainerLayout.setVerticalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalContainerLayout.createSequentialGroup()
-                .addComponent(PanelMainWorkSpaceContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addComponent(PanelMainWorkSpaceContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelInfoLabels, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -131,7 +141,15 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemNewWorkSpace.addActionListener(this::openWorkSpaceWizard);
         jMenuFileNew.add(jMenuItemNewWorkSpace);
 
+        jMenuItemBlankWorkSpace.setText("Espacio de trabajo en blanco");
+        jMenuItemBlankWorkSpace.addActionListener(this::openBlankWorkSpace);
+        jMenuFileNew.add(jMenuItemBlankWorkSpace);
+
         jMenuFile.add(jMenuFileNew);
+
+        jMenuItemCloseCurrentWorkSpace.setText("Cerrar Espacio de trabajo");
+        jMenuItemCloseCurrentWorkSpace.addActionListener(this::closeWorkSpace);
+        jMenuFile.add(jMenuItemCloseCurrentWorkSpace);
 
         jMenuBar1.add(jMenuFile);
 
@@ -153,54 +171,173 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
      * this method call a new instance of a {@code FrWorkSpaceWizard}
-     * @param evt 
+     *
+     * @param evt
      */
     private void openWorkSpaceWizard(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openWorkSpaceWizard
-        
-        try{
-            
+
+        try {
+
             WorkSpaceProperties initialProperties = new WorkSpaceProperties();
-            FrWorkSpaceWizard wizardDialog = new FrWorkSpaceWizard(this,initialProperties);
+            FrWorkSpaceWizard wizardDialog = new FrWorkSpaceWizard(this, initialProperties);
             wizardDialog.setVisible(true);
-            
-            if(wizardDialog.isAccepted()){
+
+            if (wizardDialog.isAccepted()) {
                 this.workSpaceProperties = wizardDialog.getWorkSpaceProperties();
-                this.setupWorkSpaceInfoLabels();
                 System.out.println(this.workSpaceProperties.toString());
-            }                        
-            
-        }catch(Exception ex){
+                this.initializeUartTtyComponents();
+            }
+
+        } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
     }//GEN-LAST:event_openWorkSpaceWizard
+
+    /**
+     * inicia un espacio de trabajo en blanco. con valores inciales por defecto.
+     * Se crea un {@code WorkSpaceProperties} con los valores estadar para
+     * iniciar a trabajar con el espacio de trabajo para comunicación serial.
+     *
+     * @param evt
+     */
+    private void openBlankWorkSpace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBlankWorkSpace
+
+        try {
+
+            WorkSpaceProperties.SerialConfig serial = new WorkSpaceProperties.SerialConfig();
+
+            this.workSpaceProperties = new WorkSpaceProperties().builder()
+                    .setName("Default")
+                    .setAuthor("default")
+                    .setCreatedAt(LocalDateTime.now())
+                    .setPath("")
+                    .setVersion("0.0.0")
+                    .setDescription("Espacio de trabajo en blanco")
+                    .setTxtEndingMode(TxEndingMode.NONE)
+                    .setDisplayMode(ConsoleDisplayMode.ASCII)
+                    .setTimeStampEnabled(true)
+                    .setFramingMode(FramingMode.RAW)
+                    .setSerial(serial)
+                    .build();
+
+            System.out.println(this.workSpaceProperties.toString());
+            this.initializeUartTtyComponents();
+            JOptionPane.showMessageDialog(this, "Se ha creado un espacio de trabajo en blanco", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+
+            System.out.println(ex.getMessage());
+            ex.printStackTrace(System.err);
+            JOptionPane.showMessageDialog(this, "Ocurrio un error:" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }//GEN-LAST:event_openBlankWorkSpace
+
+    /**
+     * Cerrar el espacio de trabajo actual eliminando todos los compoentes que se encuentren agregados en 
+     * {@code PanelMainWorkSpaceContainer}
+     * @param evt 
+     */
+    private void closeWorkSpace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWorkSpace
+        // TODO add your handling code here:
+        int result = JOptionPane.showConfirmDialog(this, "Estas seguro de cerrar el espacio actual", "Tectuinno-Serial", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
-    
-    private void settingUpFromWorkspaceModel(){
+        if(result != JOptionPane.YES_OPTION){
+            return;
+        }
         
+        this.workSpaceProperties = null;
         
+        this.panelUartTtyWorkSpace.getPanelWorkingZoneContainer().removeAll();
+        this.PanelMainWorkSpaceContainer.removeAll();
+        this.PanelMainWorkSpaceContainer.updateUI();
         
-    }        
-    
+        this.lblWorkSpaceName.setText("_");
+        this.lblWorksSpaceVersion.setText("_");
+        this.lblWorksSpaceAuthor.setText("_");
+        
+    }//GEN-LAST:event_closeWorkSpace
     
     
     /**
-     * inicializa los valores de la etiquetas ubicadas en la parte inferior del formulario con los datos
-     * del espacio de trabajo creado recientemente.
+     * Una vez que se creó el objeto {@link WorkSpaceProperties} se asignan los
+     * datos de este a los campos correspondientes en los componentes
+     * {@link PanelSerialCommunication} y {@link PanelUartTtyWorkSpace}.
+     *
+     * @see PanelSerialCommunication
      */
-    private void setupWorkSpaceInfoLabels(){
-        if(this.workSpaceProperties == null){
+    private void setDataInComponents() throws Exception {
+
+        if (this.workSpaceProperties == null) {
+            throw new Exception("No existen datos de espacio de trabajo");
+        }
+
+        //Panel principal de zona de trabajo Uart/tty usb
+        this.panelUartTtyWorkSpace.getjComboBoxFlowControl().setSelectedItem(this.workSpaceProperties.getSerial().getFlowControlMode());
+        this.panelUartTtyWorkSpace.getjComboBoxParityMode().setSelectedItem(this.workSpaceProperties.getSerial().getParityMode());
+        this.panelUartTtyWorkSpace.getjComboBoxTxEndingMode().setSelectedItem(this.workSpaceProperties.getTxEndingMode());
+        this.panelUartTtyWorkSpace.getjComboBoxFramingMode().setSelectedItem(this.workSpaceProperties.getFramingMode());
+        this.panelUartTtyWorkSpace.getjSpinnerBaudRate().setValue(this.workSpaceProperties.getSerial().getBaudRate());
+        this.panelUartTtyWorkSpace.getjSpinnerDataBits().setValue(this.workSpaceProperties.getSerial().getDataBits());
+        this.panelUartTtyWorkSpace.getjSpinnerStopBits().setValue(this.workSpaceProperties.getSerial().getStopBits());
+
+        //Componenes del panel de mensajería
+        switch (this.workSpaceProperties.getDisplayMode()) {
+            case ASCII:
+                this.panelSerialCommunication.getRadioButtonAsciiMode().setSelected(true);
+                break;
+            case HEXADECIMAL:
+                this.panelSerialCommunication.getRadioButtonHexMode().setSelected(true);
+                break;
+            case ASCII_HEX:
+                this.panelSerialCommunication.getRadioButtonBothMode().setSelected(true);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        this.panelSerialCommunication.getRadioButtonTimeStampOn().setSelected(this.workSpaceProperties.isTimestampEnabled());
+        this.panelSerialCommunication.getRadioButtonTimeStampOff().setSelected(this.workSpaceProperties.isTimestampEnabled());
+
+    }
+
+    /**
+     * Función que agrega los componentes {@link PanelUartTtyWorkSpace} y {@link PanelUartTtyWorkSpace}
+     * al jframe {@link Principal} (Este JFrame XD) despues de iniciar un espacio de trabajo ya sea desde {@link FrWorkSpaceWizard} o al 
+     * inicar un espacio de trabajo en blanco.
+     */
+    private void initializeUartTtyComponents() throws Exception{
+        
+        this.setupWorkSpaceInfoLabels();
+
+        this.panelSerialCommunication = new PanelSerialCommunication();
+        this.panelUartTtyWorkSpace = new PanelUartTtyWorkSpace();
+
+        this.setDataInComponents();
+
+        this.panelUartTtyWorkSpace.getPanelWorkingZoneContainer().add(this.panelSerialCommunication, BorderLayout.CENTER);
+
+        this.PanelMainWorkSpaceContainer.add(this.panelUartTtyWorkSpace, BorderLayout.CENTER);
+    }
+
+    /**
+     * inicializa los valores de la etiquetas ubicadas en la parte inferior del
+     * formulario con los datos del espacio de trabajo creado recientemente.
+     */
+    private void setupWorkSpaceInfoLabels() {
+        if (this.workSpaceProperties == null) {
             return;
         }
         this.lblWorkSpaceName.setText(this.workSpaceProperties.getName());
         this.lblWorksSpaceAuthor.setText(this.workSpaceProperties.getAuthor());
         this.lblWorksSpaceVersion.setText(this.workSpaceProperties.getVersion());
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelMainWorkSpaceContainer;
     private javax.swing.JLabel jLabel1;
@@ -210,12 +347,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuFileNew;
+    private javax.swing.JMenuItem jMenuItemBlankWorkSpace;
+    private javax.swing.JMenuItem jMenuItemCloseCurrentWorkSpace;
     private javax.swing.JMenuItem jMenuItemNewWorkSpace;
     private javax.swing.JLabel lblWorkSpaceName;
     private javax.swing.JLabel lblWorksSpaceAuthor;
     private javax.swing.JLabel lblWorksSpaceVersion;
     private javax.swing.JPanel panelInfoLabels;
     private javax.swing.JPanel panelPrincipalContainer;
-    private com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace panelUartTtyWorkSpace1;
     // End of variables declaration//GEN-END:variables
 }

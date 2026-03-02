@@ -6,11 +6,19 @@ package com.tectuinno.seriallab.view.uart_com;
 
 import com.tectuinno.seriallab.application.SerialPortService;
 import com.tectuinno.seriallab.core.FlowControlMode;
+import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.PortInfo;
+import com.tectuinno.seriallab.core.TxEndingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -27,6 +35,9 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         initComponents();
         this.configureFlowControlModeCombobox();
         this.configureParityModeCombobox();
+        this.configureStopBitsSpinnerModel();
+        this.configureTxEndingModeCombobox();
+        this.configureFramingModeCombobox();
     }
 
     /**
@@ -53,9 +64,12 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         jSpinnerStopBits = new javax.swing.JSpinner();
         jComboBoxFlowControl = new javax.swing.JComboBox<>();
         buttonConnect = new javax.swing.JButton();
+        lblForJComboBoxTxEndingMode = new javax.swing.JLabel();
+        jComboBoxTxEndingMode = new javax.swing.JComboBox<>();
+        lblForjComboBoxFramingMode = new javax.swing.JLabel();
+        jComboBoxFramingMode = new javax.swing.JComboBox<>();
         splitPanePrincipalWorkingZone = new javax.swing.JSplitPane();
         panelWorkingZoneContainer = new javax.swing.JPanel();
-        panelSerialCommunication1 = new com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication();
         panelToolsWorkingZoneContainer = new javax.swing.JPanel();
 
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -76,15 +90,24 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
 
         lblForSpinnerBaudRate.setText("Baud");
 
+        jSpinnerBaudRate.setModel(new javax.swing.SpinnerNumberModel(9600, 1200, 260000, 5));
+        jSpinnerBaudRate.setToolTipText("Tasa de baudios por defecto para comunicación");
+
         lblForSpinnerDataBits.setText("Data b:");
+
+        jSpinnerDataBits.setModel(new javax.swing.SpinnerNumberModel(8, 5, 16, 1));
 
         lblForComboBoxParityMode.setText("Parity:");
 
         lblForJSpinnerStopBits.setText("Stop:");
 
-        lblForComboBoxFlowControl.setText("Flow Control:");
+        lblForComboBoxFlowControl.setText("Flow:");
 
         buttonConnect.setText("Conectar");
+
+        lblForJComboBoxTxEndingMode.setText("Ending:");
+
+        lblForjComboBoxFramingMode.setText("Framing:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,7 +115,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblPortDesc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -102,15 +125,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblForSpinnerBaudRate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblForSpinnerDataBits)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblForComboBoxParityMode)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxParityMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSpinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblForJSpinnerStopBits)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,8 +135,25 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxFlowControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonConnect)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lblForJComboBoxTxEndingMode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxTxEndingMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblForjComboBoxFramingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFramingMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonConnect))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblForSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblForComboBoxParityMode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxParityMode, 0, 70, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,7 +176,11 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
                     .addComponent(lblForComboBoxFlowControl)
                     .addComponent(jSpinnerStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxFlowControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonConnect))
+                    .addComponent(buttonConnect)
+                    .addComponent(lblForJComboBoxTxEndingMode)
+                    .addComponent(jComboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblForjComboBoxFramingMode)
+                    .addComponent(jComboBoxFramingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,8 +188,6 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         splitPanePrincipalWorkingZone.setDividerLocation(550);
 
         panelWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
-        panelWorkingZoneContainer.add(panelSerialCommunication1, java.awt.BorderLayout.CENTER);
-
         splitPanePrincipalWorkingZone.setLeftComponent(panelWorkingZoneContainer);
 
         panelToolsWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
@@ -193,6 +227,18 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         this.jComboBoxParityMode.setModel(new DefaultComboBoxModel<>(ParityMode.values()));
     }
     
+    private void configureTxEndingModeCombobox(){
+        this.jComboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
+    }
+    
+    private void configureFramingModeCombobox(){
+        this.jComboBoxFramingMode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
+    }
+    
+    /**
+     * 
+     * @author Pablo_g
+     */
     private void configureCmbAviablePorts(){
         
         List<PortInfo> current = SerialPortService.listAvaiablePorts();                                
@@ -209,24 +255,88 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         }                
         
     }
+    
+    /**
+     * Set the permitted values for the JSpinner used to set the Stop bits mode
+     *
+     * @author Pablo_g
+     */
+    private void configureStopBitsSpinnerModel(){
+        SpinnerNumberModel model = new SpinnerNumberModel(1d, 1d, 2d, 0.5d);
+        this.jSpinnerStopBits.setModel(model);
+        
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.jSpinnerStopBits, "#0.#");
+        this.jSpinnerStopBits.setEditor(editor);
+        
+        DecimalFormat format = editor.getFormat();
+        format.setMinimumFractionDigits(0);
+        format.setMaximumFractionDigits(1);
+        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
+    }
+    
+    /**
+     * Se expone el componente para su manipulación desde el formulario principal
+     * desde en donde es invocado el panel principal.
+     * @return 
+     */
+    public JPanel getPanelWorkingZoneContainer(){
+        return this.panelWorkingZoneContainer;
+    }
 
+    public JComboBox<String> getjCmbListAviablePorts() {
+        return jCmbListAviablePorts;
+    }
+
+    public JComboBox<FlowControlMode> getjComboBoxFlowControl() {
+        return jComboBoxFlowControl;
+    }
+
+    public JComboBox<TxEndingMode> getjComboBoxTxEndingMode(){
+        return this.jComboBoxTxEndingMode;
+    }
+    
+    public JComboBox<ParityMode> getjComboBoxParityMode() {
+        return jComboBoxParityMode;
+    }
+    
+    public JComboBox<FramingMode> getjComboBoxFramingMode(){
+        return this.jComboBoxFramingMode;
+    }
+
+    public JSpinner getjSpinnerBaudRate() {
+        return jSpinnerBaudRate;
+    }
+
+    public JSpinner getjSpinnerDataBits() {
+        return jSpinnerDataBits;
+    }
+
+    public JSpinner getjSpinnerStopBits() {
+        return jSpinnerStopBits;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonConnect;
     private javax.swing.JButton buttonScanForComDevises;
     private javax.swing.JComboBox<String> jCmbListAviablePorts;
     private javax.swing.JComboBox<FlowControlMode> jComboBoxFlowControl;
+    private javax.swing.JComboBox<FramingMode> jComboBoxFramingMode;
     private javax.swing.JComboBox<ParityMode> jComboBoxParityMode;
+    private javax.swing.JComboBox<TxEndingMode> jComboBoxTxEndingMode;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerBaudRate;
     private javax.swing.JSpinner jSpinnerDataBits;
     private javax.swing.JSpinner jSpinnerStopBits;
     private javax.swing.JLabel lblForComboBoxFlowControl;
     private javax.swing.JLabel lblForComboBoxParityMode;
+    private javax.swing.JLabel lblForJComboBoxTxEndingMode;
     private javax.swing.JLabel lblForJSpinnerStopBits;
     private javax.swing.JLabel lblForSpinnerBaudRate;
     private javax.swing.JLabel lblForSpinnerDataBits;
+    private javax.swing.JLabel lblForjComboBoxFramingMode;
     private javax.swing.JLabel lblPortDesc;
-    private com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication panelSerialCommunication1;
     private javax.swing.JPanel panelToolsWorkingZoneContainer;
     private javax.swing.JPanel panelWorkingZoneContainer;
     private javax.swing.JSplitPane splitPanePrincipalWorkingZone;
