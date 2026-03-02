@@ -4,7 +4,12 @@
  */
 package com.tectuinno.seriallab.view.uart_com.components;
 
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -250,6 +255,44 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         return this.splitPaneChatContainer;
     }
 
+    public JSpinner getjSpinnerTimingSend() {
+        return jSpinnerTimingSend;
+    }
+
+    public JRadioButton getRadioButtonAsciiMode() {
+        return radioButtonAsciiMode;
+    }
+
+    public JRadioButton getRadioButtonBothMode() {
+        return radioButtonBothMode;
+    }
+
+    public JRadioButton getRadioButtonHexMode() {
+        return radioButtonHexMode;
+    }
+
+    public JRadioButton getRadioButtonTimeStampOff() {
+        return radioButtonTimeStampOff;
+    }
+
+    public JRadioButton getRadioButtonTimeStampOn() {
+        return radioButtonTimeStampOn;
+    }
+
+    public JTextArea getTextAreaMessageToSend() {
+        return textAreaMessageToSend;
+    }
+
+    public JTextField getTextFieldFinalCharacterLine() {
+        return textFieldFinalCharacterLine;
+    }
+
+    public JTextPane getTextPaneAllMessages() {
+        return textPaneAllMessages;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCleanAllMessages;
     private javax.swing.JButton buttonSendMessage;
