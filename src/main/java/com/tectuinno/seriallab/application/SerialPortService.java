@@ -6,6 +6,7 @@ package com.tectuinno.seriallab.application;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.tectuinno.seriallab.core.PortInfo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,30 @@ public class SerialPortService {
             return new ArrayList<>();
         }
         
+    }
+    
+    public static void sendBytes(String systemPortName, int baud, byte[] data) throws IOException {
+    	
+    	//LoggerInfoManager.writteInInfoLogTxt("Preparando envio de trama a: " + systemPortName);
+    	
+        SerialPort port = SerialPort.getCommPort(systemPortName);
+        port.setComPortParameters(baud, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY);
+        port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
+
+        if (!port.openPort()) {
+
+            throw new IOException("No se pudo abrir el puerto: " + systemPortName);
+
+        }
+        try {
+            int wrote = port.writeBytes(data, data.length);
+            if (wrote != data.length) {
+                throw new IOException("Escritura incompleta: " + wrote + " de " + data.length + " bytes.");
+            }
+            port.flushIOBuffers();
+        } finally {
+            port.closePort();
+        }
     }
     
 }
