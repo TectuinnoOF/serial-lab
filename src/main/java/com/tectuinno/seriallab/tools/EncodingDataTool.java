@@ -35,7 +35,7 @@ public class EncodingDataTool {
      * @param hexStr
      * @return un nuevo {@code String} con el mensaje convertido en ASCII
      */
-    private static String hexToAscii(String hexStr) {
+    public static String hexToAscii(String hexStr) {
         StringBuilder output = new StringBuilder("");
 
         for (int i = 0; i < hexStr.length(); i += 2) {

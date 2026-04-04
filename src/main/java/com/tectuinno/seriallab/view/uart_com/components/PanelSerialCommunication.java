@@ -4,6 +4,7 @@
  */
 package com.tectuinno.seriallab.view.uart_com.components;
 
+import com.tectuinno.seriallab.tools.EncodingDataTool;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -71,6 +72,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         txSendModeButtonGroup.add(radioButtonAsciiMode);
         radioButtonAsciiMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
         radioButtonAsciiMode.setText("ASCII");
+        radioButtonAsciiMode.addActionListener(this::convertMessageToAscii);
 
         txSendModeButtonGroup.add(radioButtonHexMode);
         radioButtonHexMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
@@ -248,6 +250,28 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         this.splitPaneChatContainer.setDividerLocation(290 - this.getHeight());
         
     }//GEN-LAST:event_formAncestorResized
+
+    /**
+     * Convertir el Texto contenido en {@code textAreaMessageToSend} en formato ASCII
+     * al momento de seleccionar {@code radioButtonAsciiMode}
+     * @param evt 
+     */
+    private void convertMessageToAscii(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertMessageToAscii
+        
+        if(this.textAreaMessageToSend.getText().isEmpty()){
+            System.out.println("No message to convert");
+            return;
+        }
+        
+        if(!this.textAreaMessageToSend.getText().codePoints().allMatch( c -> c < 128)) return;
+        
+        if(this.radioButtonAsciiMode.isSelected()){
+            System.out.println("To ascii: " + this.textAreaMessageToSend.getText());
+           String nwStr = EncodingDataTool.hexToAscii(this.textAreaMessageToSend.getText());
+           this.textAreaMessageToSend.setText(nwStr);
+        }
+        
+    }//GEN-LAST:event_convertMessageToAscii
 
     /**
      * Se expone el contenedor actual del area de mensajes para manipular sus propiedades
