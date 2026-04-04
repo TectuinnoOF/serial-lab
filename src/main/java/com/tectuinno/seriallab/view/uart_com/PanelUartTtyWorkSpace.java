@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
@@ -70,6 +71,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         jComboBoxFramingMode = new javax.swing.JComboBox<>();
         splitPanePrincipalWorkingZone = new javax.swing.JSplitPane();
         panelWorkingZoneContainer = new javax.swing.JPanel();
+        tabbedPaneWorkingZoneContainer = new javax.swing.JTabbedPane();
         panelToolsWorkingZoneContainer = new javax.swing.JPanel();
 
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -188,6 +190,10 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         splitPanePrincipalWorkingZone.setDividerLocation(550);
 
         panelWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
+
+        tabbedPaneWorkingZoneContainer.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
+        panelWorkingZoneContainer.add(tabbedPaneWorkingZoneContainer, java.awt.BorderLayout.CENTER);
+
         splitPanePrincipalWorkingZone.setLeftComponent(panelWorkingZoneContainer);
 
         panelToolsWorkingZoneContainer.setLayout(new java.awt.BorderLayout());
@@ -315,6 +321,9 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         return jSpinnerStopBits;
     }
     
+    public JTabbedPane getTabbedPaneWorkingZoneContainer(){
+        return this.tabbedPaneWorkingZoneContainer;
+    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,5 +349,6 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     private javax.swing.JPanel panelToolsWorkingZoneContainer;
     private javax.swing.JPanel panelWorkingZoneContainer;
     private javax.swing.JSplitPane splitPanePrincipalWorkingZone;
+    private javax.swing.JTabbedPane tabbedPaneWorkingZoneContainer;
     // End of variables declaration//GEN-END:variables
 }

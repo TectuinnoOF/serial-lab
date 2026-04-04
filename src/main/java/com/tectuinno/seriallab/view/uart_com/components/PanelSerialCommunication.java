@@ -125,6 +125,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
                 .addComponent(radioButtonTimeStampOff))
         );
 
+        buttonCleanAllMessages.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         buttonCleanAllMessages.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
         buttonCleanAllMessages.setText("Limpiar");
 
@@ -162,11 +163,11 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         panelAllMessagesContainer.setLayout(panelAllMessagesContainerLayout);
         panelAllMessagesContainerLayout.setHorizontalGroup(
             panelAllMessagesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
         );
         panelAllMessagesContainerLayout.setVerticalGroup(
             panelAllMessagesContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
         );
 
         splitPaneChatContainer.setTopComponent(panelAllMessagesContainer);
@@ -175,12 +176,14 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         textAreaMessageToSend.setRows(5);
         jScrollPane3.setViewportView(textAreaMessageToSend);
 
+        buttonSendMessage.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonSendMessage.setText("Enviar");
 
         lblForTextFieldFinalCharacter.setText("Caracter Final");
 
         lblForSpinnerTiming.setText("intervalo");
 
+        toggleEnableTimingSending.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
         toggleEnableTimingSending.setText("Activar");
 
         javax.swing.GroupLayout panelWrittingZoneContainerLayout = new javax.swing.GroupLayout(panelWrittingZoneContainer);
@@ -194,7 +197,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
                     .addGroup(panelWrittingZoneContainerLayout.createSequentialGroup()
                         .addComponent(lblForTextFieldFinalCharacter)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldFinalCharacterLine, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                        .addComponent(textFieldFinalCharacterLine, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                     .addGroup(panelWrittingZoneContainerLayout.createSequentialGroup()
                         .addComponent(lblForSpinnerTiming)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,7 +239,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelSendingConfigParametersContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(splitPaneChatContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                .addComponent(splitPaneChatContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

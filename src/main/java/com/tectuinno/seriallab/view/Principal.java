@@ -9,6 +9,7 @@ import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
 import com.tectuinno.seriallab.core.WorkSpaceProperties;
 import com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace;
+import com.tectuinno.seriallab.view.uart_com.components.PanelConsolLogResult;
 import com.tectuinno.seriallab.view.uart_com.components.PanelSerialCommunication;
 import java.awt.BorderLayout;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     private WorkSpaceProperties workSpaceProperties;
     private PanelUartTtyWorkSpace panelUartTtyWorkSpace;
     private PanelSerialCommunication panelSerialCommunication;
+    private PanelConsolLogResult panelConsolLogResult;
 
     /**
      * Creates new form Principal
@@ -315,11 +317,14 @@ public class Principal extends javax.swing.JFrame {
         this.setupWorkSpaceInfoLabels();
 
         this.panelSerialCommunication = new PanelSerialCommunication();
-        this.panelUartTtyWorkSpace = new PanelUartTtyWorkSpace();
+        this.panelUartTtyWorkSpace = new PanelUartTtyWorkSpace();        
+        this.panelConsolLogResult = new PanelConsolLogResult();
 
         this.setDataInComponents();
 
-        this.panelUartTtyWorkSpace.getPanelWorkingZoneContainer().add(this.panelSerialCommunication, BorderLayout.CENTER);
+        //this.panelUartTtyWorkSpace.getPanelWorkingZoneContainer().add(this.panelSerialCommunication, BorderLayout.CENTER);
+        this.panelUartTtyWorkSpace.getTabbedPaneWorkingZoneContainer().addTab("UART Chat", this.panelSerialCommunication);
+        this.panelUartTtyWorkSpace.getTabbedPaneWorkingZoneContainer().addTab("Logs", this.panelConsolLogResult);
 
         this.PanelMainWorkSpaceContainer.add(this.panelUartTtyWorkSpace, BorderLayout.CENTER);
     }
