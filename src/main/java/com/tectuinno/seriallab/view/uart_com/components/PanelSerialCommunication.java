@@ -263,11 +263,11 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
             return;
         }
         
-        if(!this.textAreaMessageToSend.getText().codePoints().allMatch( c -> c < 128)) return;
+        if(!this.textAreaMessageToSend.getText().codePoints().allMatch( c -> c < 127)) return;
         
         if(this.radioButtonAsciiMode.isSelected()){
-            System.out.println("To ascii: " + this.textAreaMessageToSend.getText());
-           String nwStr = EncodingDataTool.hexToAscii(this.textAreaMessageToSend.getText());
+           String noSpacesString = this.textAreaMessageToSend.getText().replaceAll("\\s","");
+           String nwStr = EncodingDataTool.hexToAscii(noSpacesString);
            this.textAreaMessageToSend.setText(nwStr);
         }
         

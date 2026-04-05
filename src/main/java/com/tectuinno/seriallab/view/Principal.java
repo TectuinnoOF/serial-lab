@@ -289,17 +289,10 @@ public class Principal extends javax.swing.JFrame {
 
         //Componenes del panel de mensajería
         switch (this.workSpaceProperties.getDisplayMode()) {
-            case ASCII:
-                this.panelSerialCommunication.getRadioButtonAsciiMode().setSelected(true);
-                break;
-            case HEXADECIMAL:
-                this.panelSerialCommunication.getRadioButtonHexMode().setSelected(true);
-                break;
-            case ASCII_HEX:
-                this.panelSerialCommunication.getRadioButtonBothMode().setSelected(true);
-                break;
-            default:
-                throw new AssertionError();
+            case ASCII -> this.panelSerialCommunication.getRadioButtonAsciiMode().setSelected(true);
+            case HEXADECIMAL -> this.panelSerialCommunication.getRadioButtonHexMode().setSelected(true);
+            case ASCII_HEX -> this.panelSerialCommunication.getRadioButtonBothMode().setSelected(true);
+            default -> throw new AssertionError();
         }
 
         this.panelSerialCommunication.getRadioButtonTimeStampOn().setSelected(this.workSpaceProperties.isTimestampEnabled());
