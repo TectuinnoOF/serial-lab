@@ -13,17 +13,43 @@ public class EncodingDataTool {
 
     private EncodingDataTool() {
     }
-
+    
+    /**
+     * Identifica si el String actual es un valor hexadecimal o no.
+     * @param str -> cadena a comprobar
+     * @return true si {@code str} es hexadecimal
+     */
+    private static boolean isAlreadyHex(String str){
+        
+        for(int i = 0; i < str.length(); i++){
+            
+            char ch = str.charAt(i);
+            
+            if((ch < '0' || ch > '9') && (ch < 'A' || ch > 'F')){
+                return false;
+            }
+                        
+        }
+        
+        return true;
+        
+    }
+    
     /**
      * Convierte un {@code String} en formato ASCII a su equivalente en Hexadecimal
      * @param asciiStr
      * @return un nuevo {@code String} con el mensaje convertido a hexadecimal
      */
-    public static String asciiToHex(String asciiStr) {
+    public static String asciiToHex(String asciiStr) throws NumberFormatException{
+        
+        if(isAlreadyHex(asciiStr)){
+            throw new NumberFormatException("El valor: " + asciiStr + " Ya es hexadecimal");
+        }
+        
         char[] chars = asciiStr.toCharArray();
         StringBuilder hex = new StringBuilder();
         for (char ch : chars) {
-            hex.append(Integer.toHexString((int) ch));
+            hex.append(Integer.toHexString((int) ch).toUpperCase());
         }
 
         return hex.toString();
@@ -35,7 +61,8 @@ public class EncodingDataTool {
      * @param hexStr
      * @return un nuevo {@code String} con el mensaje convertido en ASCII
      */
-    public static String hexToAscii(String hexStr) {
+    public static String hexToAscii(String hexStr) {                                
+        
         StringBuilder output = new StringBuilder("");
 
         for (int i = 0; i < hexStr.length(); i += 2) {

@@ -5,6 +5,7 @@
 package com.tectuinno.seriallab.view.uart_com.components;
 
 import com.tectuinno.seriallab.tools.EncodingDataTool;
+import java.util.regex.Pattern;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -77,6 +78,7 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         txSendModeButtonGroup.add(radioButtonHexMode);
         radioButtonHexMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
         radioButtonHexMode.setText("Hex");
+        radioButtonHexMode.addActionListener(this::convertMessageToHex);
 
         txSendModeButtonGroup.add(radioButtonBothMode);
         radioButtonBothMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
@@ -272,6 +274,26 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_convertMessageToAscii
+
+    private void convertMessageToHex(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertMessageToHex
+        
+        String msg = this.textAreaMessageToSend.getText();
+        
+        if(msg.isEmpty()){
+            System.out.println("No message to convert");
+            return;
+        }
+        
+        try{
+            String noSpacesString = this.textAreaMessageToSend.getText().replaceAll("\\s","");
+            String nwMsg = EncodingDataTool.asciiToHex(noSpacesString);
+            this.textAreaMessageToSend.setText(nwMsg);
+            
+        }catch(Exception ex){
+            ex.printStackTrace(System.err);            
+        }
+        
+    }//GEN-LAST:event_convertMessageToHex
 
     /**
      * Se expone el contenedor actual del area de mensajes para manipular sus propiedades
