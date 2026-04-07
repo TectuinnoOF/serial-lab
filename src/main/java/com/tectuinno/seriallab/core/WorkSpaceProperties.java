@@ -88,12 +88,12 @@ public class WorkSpaceProperties implements Serializable {
             this.workSpaceProperties.setVersion(version);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setDescription(String description){
+
+        public WorkSpacePropertiesBuilder setDescription(String description) {
             this.workSpaceProperties.setDescription(description);
             return this;
         }
-        
+
         public WorkSpacePropertiesBuilder setSerial(SerialConfig serialConfig) {
             this.workSpaceProperties.setSerial(serialConfig);
             return this;
@@ -113,12 +113,12 @@ public class WorkSpaceProperties implements Serializable {
             this.workSpaceProperties.setTimestampEnabled(timeStampEnabled);
             return this;
         }
-        
-        public WorkSpacePropertiesBuilder setFramingMode(FramingMode framingMode){
+
+        public WorkSpacePropertiesBuilder setFramingMode(FramingMode framingMode) {
             this.workSpaceProperties.setFramingMode(framingMode);
             return this;
         }
-        
+
         public WorkSpaceProperties build() {
             return this.workSpaceProperties;
         }
@@ -137,7 +137,7 @@ public class WorkSpaceProperties implements Serializable {
         this.timestampEnabled = timestampEnabled;
         this.framingMode = framingMode;
     }
-    
+
     /**
      * Devuelve la instancia construida.
      *
@@ -238,7 +238,7 @@ public class WorkSpaceProperties implements Serializable {
     @Override
     public String toString() {
         return "WorkSpaceProperties{" + "name=" + name + ", author=" + author + ", createdAt=" + createdAt + ", path=" + path + ", version=" + version + ", description=" + description + ", serial=" + serial + ", txEndingMode=" + txEndingMode + ", displayMode=" + displayMode + ", timestampEnabled=" + timestampEnabled + ", framingMode=" + framingMode + '}';
-    }    
+    }
 
     /**
      * Constructor vacio para serialización con {@code ObjectMapper}
@@ -311,7 +311,7 @@ public class WorkSpaceProperties implements Serializable {
         @Override
         public String toString() {
             return "SerialConfig{" + "baudRate=" + baudRate + ", dataBits=" + dataBits + ", parityMode=" + parityMode + ", stopBits=" + stopBits + ", flowControlMode=" + flowControlMode + '}';
-        }                
+        }
 
     }
 

@@ -106,6 +106,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         lblForComboBoxFlowControl.setText("Flow:");
 
         buttonConnect.setText("Conectar");
+        buttonConnect.addActionListener(this::connectInterfaceToDevice);
 
         lblForJComboBoxTxEndingMode.setText("Ending:");
 
@@ -224,6 +225,17 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         // TODO add your handling code here:
         this.configureCmbAviablePorts();
     }//GEN-LAST:event_buttonScanForComDevisesActionPerformed
+
+    /**
+     * Establece una coexion mediante protocolo UART/TTY con el dispositivo seleccionado
+     * en el listado de puertos COM disponibles.
+     * @param evt 
+     */
+    private void connectInterfaceToDevice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectInterfaceToDevice
+        
+        
+        
+    }//GEN-LAST:event_connectInterfaceToDevice
 
     private void configureFlowControlModeCombobox(){
         this.jComboBoxFlowControl.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));

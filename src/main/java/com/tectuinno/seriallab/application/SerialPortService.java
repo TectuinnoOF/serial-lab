@@ -49,4 +49,10 @@ public class SerialPortService {
         
     }
     
+    public static boolean tryConnect(String systemPortName){
+        
+        return false;
+        
+    }
+    
 }

@@ -4,6 +4,7 @@
  */
 package com.tectuinno.seriallab.view.uart_com.components;
 
+import com.tectuinno.seriallab.core.ConsoleDisplayMode;
 import com.tectuinno.seriallab.tools.EncodingDataTool;
 import java.util.regex.Pattern;
 import javax.swing.JRadioButton;
@@ -340,7 +341,17 @@ public class PanelSerialCommunication extends javax.swing.JPanel {
         return textPaneAllMessages;
     }
     
-    
+    /**
+     * 
+     * @return el {@code ConsoleDisplayMode} habilitado en base al {@code JRadioButton} txMode seleccionado
+     */
+    public ConsoleDisplayMode getTxMod(){
+        
+        if(this.radioButtonHexMode.isSelected()) return ConsoleDisplayMode.HEXADECIMAL;
+        if(this.radioButtonAsciiMode.isSelected()) return ConsoleDisplayMode.ASCII;        
+        return ConsoleDisplayMode.ASCII_HEX;
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCleanAllMessages;
