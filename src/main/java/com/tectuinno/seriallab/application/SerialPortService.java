@@ -74,7 +74,7 @@ public class SerialPortService {
                 if (desc != null && desc.toLowerCase().contains("bluetooth")) {
                     continue;
                 }
-                out.add(new PortInfo(p.getDescriptivePortName(), desc));
+                out.add(new PortInfo(p.getSystemPortName(), desc));
             }
 
             return out;

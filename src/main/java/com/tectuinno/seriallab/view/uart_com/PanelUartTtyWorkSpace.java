@@ -4,12 +4,15 @@
  */
 package com.tectuinno.seriallab.view.uart_com;
 
+import com.fazecast.jSerialComm.SerialPort;
 import com.tectuinno.seriallab.application.SerialPortService;
+import com.tectuinno.seriallab.core.ComPortParameters;
 import com.tectuinno.seriallab.core.FlowControlMode;
 import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.PortInfo;
 import com.tectuinno.seriallab.core.TxEndingMode;
+import com.tectuinno.seriallab.tools.Result;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -28,6 +31,7 @@ import javax.swing.SwingConstants;
 public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     
     private List<PortInfo> currentAviablePortsList;
+    private ComPortParameters comPortParameters;
     
     /**
      * Creates new form PanelUartTtyWorkSpace
@@ -38,7 +42,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
         this.configureParityModeCombobox();
         this.configureStopBitsSpinnerModel();
         this.configureTxEndingModeCombobox();
-        this.configureFramingModeCombobox();
+        this.configureFramingModeCombobox();        
     }
 
     /**
@@ -232,8 +236,21 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      * @param evt 
      */
     private void connectInterfaceToDevice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectInterfaceToDevice
+                
+        comPortParameters = ComPortParameters.builder()
+                .build();
+                
+        String systemPortName = this.currentAviablePortsList.get(this.jCmbListAviablePorts.getSelectedIndex()).systemName;
         
+        Result<SerialPort> r = SerialPortService.tryConnect(systemPortName, comPortParameters);
         
+        if(!r.isOk()){
+            System.out.println(r.getMessage());
+            JOptionPane.showMessageDialog(this, r.getMessage(), "Conexion fallida con " + systemPortName, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        System.out.println("conectado a: " + r.getValue());
         
     }//GEN-LAST:event_connectInterfaceToDevice
 
@@ -259,8 +276,12 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      */
     private void configureCmbAviablePorts(){
         
-        List<PortInfo> current = SerialPortService.listAvaiablePorts();                                
+        List<PortInfo> current = SerialPortService.listAvaiablePorts();
         this.jCmbListAviablePorts.removeAllItems();
+        
+        if(this.currentAviablePortsList != null){
+            this.currentAviablePortsList.clear();
+        }        
         
         if(current == null || current.isEmpty()){
             this.jCmbListAviablePorts.addItem("Sin dispositivos...");
@@ -268,10 +289,19 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
             return;
         }
         
+        this.setCurrentAviablePortsList(current);
+        
         for(PortInfo pi: current){
             this.jCmbListAviablePorts.addItem(pi.toString());
         }                
         
+    }
+    
+    /**
+     * crea un lista global con los puertos conectados actualmente al equipo.
+     */
+    private void setCurrentAviablePortsList(List<PortInfo> currentAviablePortsList){
+        this.currentAviablePortsList = currentAviablePortsList;
     }
     
     /**
