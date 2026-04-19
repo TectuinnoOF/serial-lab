@@ -236,11 +236,16 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
      * @param evt 
      */
     private void connectInterfaceToDevice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectInterfaceToDevice
-                
-        comPortParameters = ComPortParameters.builder()
-                .build();
-                
+                                        
         String systemPortName = this.currentAviablePortsList.get(this.jCmbListAviablePorts.getSelectedIndex()).systemName;
+        
+        comPortParameters = ComPortParameters.builder()
+                .baudRate((int)this.getjSpinnerBaudRate().getValue())
+                .dataBits((int)this.jSpinnerDataBits.getValue())
+                .parityMode((ParityMode)this.jComboBoxParityMode.getSelectedItem())
+                .flowControlMode((FlowControlMode) this.jComboBoxParityMode.getSelectedItem())
+                .timeoutMode(0)
+                .build();
         
         Result<SerialPort> r = SerialPortService.tryConnect(systemPortName, comPortParameters);
         
@@ -366,6 +371,7 @@ public class PanelUartTtyWorkSpace extends javax.swing.JPanel {
     public JTabbedPane getTabbedPaneWorkingZoneContainer(){
         return this.tabbedPaneWorkingZoneContainer;
     }
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

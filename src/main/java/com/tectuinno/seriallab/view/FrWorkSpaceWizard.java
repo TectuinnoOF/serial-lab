@@ -11,6 +11,8 @@ import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
 import com.tectuinno.seriallab.core.WorkSpaceProperties;
+import com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
@@ -37,6 +39,7 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
     private WorkSpaceProperties initialWorkSpaceProperties;
+    private GeneralWorkspaceDataParameters generalWorkspaceDataParameters;
     private boolean accepted;
     
     /**
@@ -46,7 +49,9 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         super(parent,"Nuevo espacio de trabajo",true);
         this.initialWorkSpaceProperties = initialWorkSpaceProperties;
         this.accepted = false;
-        initComponents();
+        this.generalWorkspaceDataParameters = new GeneralWorkspaceDataParameters();
+        initComponents();        
+        this.addGeneralWorkSpaceDataParameters();
         this.configParityModeCombobox();
         this.configureStopbitsSpinnerModel();
         this.configFlowControlModeCombobox();
@@ -55,8 +60,8 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         this.configureConsoleDisplayModeComboBox();
         this.setCurrentDateOnWorkApaceCreation();
         this.setLocationRelativeTo(parent);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);        
-    }
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,21 +76,6 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         panelPrincipalContainer = new javax.swing.JPanel();
         tabbPaneParametersFields = new javax.swing.JTabbedPane();
         panelWorkSpaceGeneralSettings = new javax.swing.JPanel();
-        panelGeneralWorkspaceDataParameters = new javax.swing.JPanel();
-        lblWorkspaceName = new javax.swing.JLabel();
-        lblAuthorsName = new javax.swing.JLabel();
-        textFieldWorkSpaceName = new javax.swing.JTextField();
-        textFieldAuthorsName = new javax.swing.JTextField();
-        lblCreatedAt = new javax.swing.JLabel();
-        textFieldCreatedAt = new javax.swing.JTextField();
-        lblWorkspaceVersion = new javax.swing.JLabel();
-        textFieldSourcePath = new javax.swing.JTextField();
-        btnOpenFileChoser = new javax.swing.JButton();
-        lblSourcePath1 = new javax.swing.JLabel();
-        textFieldWorkSpaceVersion = new javax.swing.JTextField();
-        lblDescripcion = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaDescriptionWorkspace = new javax.swing.JTextArea();
         panelUartSettings = new javax.swing.JPanel();
         panelGeneralUartWorkSpaceParameters = new javax.swing.JPanel();
         lblDataBits = new javax.swing.JLabel();
@@ -120,145 +110,7 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
             }
         });
 
-        panelGeneralWorkspaceDataParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
-
-        lblWorkspaceName.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblWorkspaceName.setText("Nombre:");
-
-        lblAuthorsName.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblAuthorsName.setText("Autor");
-
-        textFieldWorkSpaceName.setToolTipText("Nombre que se le asigna al espacio de trabajo");
-        textFieldWorkSpaceName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                verifyNameWasWritten(evt);
-            }
-        });
-
-        textFieldAuthorsName.setToolTipText("Autor que crea este espacio de trabajo");
-        textFieldAuthorsName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                verifyAuthorsName(evt);
-            }
-        });
-
-        lblCreatedAt.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblCreatedAt.setText("Fecha de creación:");
-
-        textFieldCreatedAt.setEditable(false);
-        textFieldCreatedAt.setToolTipText("Fecha actual en la que se está creando el nuevo espacio de trabajo");
-
-        lblWorkspaceVersion.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblWorkspaceVersion.setText("Version");
-
-        textFieldSourcePath.setEditable(false);
-        textFieldSourcePath.setToolTipText("Ruta en la cual serán almacenados los datos del espacio de trabajo");
-        textFieldSourcePath.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                verifyAsignedRootPath(evt);
-            }
-        });
-
-        btnOpenFileChoser.setText("src...");
-        btnOpenFileChoser.setToolTipText("Abrir el explorador de archivos");
-        btnOpenFileChoser.addActionListener(this::chooseRootPathWorkspace);
-
-        lblSourcePath1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblSourcePath1.setText("Carpeta raiz");
-
-        textFieldWorkSpaceVersion.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                verifyVersionWritten(evt);
-            }
-        });
-
-        lblDescripcion.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblDescripcion.setText("Descripción");
-
-        textAreaDescriptionWorkspace.setColumns(20);
-        textAreaDescriptionWorkspace.setRows(5);
-        jScrollPane1.setViewportView(textAreaDescriptionWorkspace);
-
-        javax.swing.GroupLayout panelGeneralWorkspaceDataParametersLayout = new javax.swing.GroupLayout(panelGeneralWorkspaceDataParameters);
-        panelGeneralWorkspaceDataParameters.setLayout(panelGeneralWorkspaceDataParametersLayout);
-        panelGeneralWorkspaceDataParametersLayout.setHorizontalGroup(
-            panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblWorkspaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldWorkSpaceName))
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblAuthorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldAuthorsName))
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblCreatedAt, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldCreatedAt))
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblSourcePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldWorkSpaceVersion))
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-        );
-        panelGeneralWorkspaceDataParametersLayout.setVerticalGroup(
-            panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeneralWorkspaceDataParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblWorkspaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldWorkSpaceName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAuthorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldAuthorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCreatedAt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldCreatedAt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(textFieldSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblSourcePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnOpenFileChoser, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralWorkspaceDataParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblWorkspaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldWorkSpaceVersion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout panelWorkSpaceGeneralSettingsLayout = new javax.swing.GroupLayout(panelWorkSpaceGeneralSettings);
-        panelWorkSpaceGeneralSettings.setLayout(panelWorkSpaceGeneralSettingsLayout);
-        panelWorkSpaceGeneralSettingsLayout.setHorizontalGroup(
-            panelWorkSpaceGeneralSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralWorkspaceDataParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panelWorkSpaceGeneralSettingsLayout.setVerticalGroup(
-            panelWorkSpaceGeneralSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelWorkSpaceGeneralSettingsLayout.createSequentialGroup()
-                .addComponent(panelGeneralWorkspaceDataParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
+        panelWorkSpaceGeneralSettings.setLayout(new java.awt.BorderLayout());
         tabbPaneParametersFields.addTab("General", panelWorkSpaceGeneralSettings);
 
         panelGeneralUartWorkSpaceParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros UART"));
@@ -461,7 +313,6 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
         buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonCreateWorkspace.setText("Crear");
-        buttonCreateWorkspace.setEnabled(false);
         buttonCreateWorkspace.addActionListener(this::createWorkSpace);
 
         buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
@@ -517,53 +368,17 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         return this.initialWorkSpaceProperties;
     }
     
-    private void chooseRootPathWorkspace(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRootPathWorkspace
-
-        final JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        final int returnVal = fileChooser.showDialog(this, "Seleccionar");
-
-        if (returnVal != JFileChooser.APPROVE_OPTION) {
-            JOptionPane.showMessageDialog(this, "Es necesario señalar un directoio para el espacio de trabajo", "Atención", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        File file = fileChooser.getSelectedFile();
-        this.textFieldSourcePath.setText(file.getAbsolutePath());
-    }//GEN-LAST:event_chooseRootPathWorkspace
-
     private void setCurrentDateOnWorkApaceCreation() {
         LocalDate current = LocalDate.now();
-        this.textFieldCreatedAt.setText(current.toString());
+        this.generalWorkspaceDataParameters.getTextFieldCreatedAt().setText(current.toString());
     }
 
-    /**
-     * Verifica que el nombre del espacio de trabajo haya sido asignado
-     *
-     * @param evt
-     */
-    private void verifyNameWasWritten(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyNameWasWritten
-        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldWorkSpaceName);
-        this.checkEmptieFieldsInWorkspaceData();
-    }//GEN-LAST:event_verifyNameWasWritten
-
-    private void verifyAuthorsName(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyAuthorsName
-        // TODO add your handling code here:
-        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldAuthorsName);
-        this.checkEmptieFieldsInWorkspaceData();
-    }//GEN-LAST:event_verifyAuthorsName
-
-    private void verifyAsignedRootPath(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyAsignedRootPath
-        // TODO add your handling code here:
-        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldSourcePath);
-        this.checkEmptieFieldsInWorkspaceData();
-    }//GEN-LAST:event_verifyAsignedRootPath
-
-    private void verifyVersionWritten(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifyVersionWritten
-        // TODO add your handling code here:
-        this.colorizeBorderOfEmptyFieldsOnFocuslost(this.textFieldWorkSpaceVersion);
-        this.checkEmptieFieldsInWorkspaceData();
-    }//GEN-LAST:event_verifyVersionWritten
-
+    private void addGeneralWorkSpaceDataParameters(){
+        
+        this.panelWorkSpaceGeneralSettings.add(this.generalWorkspaceDataParameters,BorderLayout.CENTER);
+        
+    }
+    
     /**
      * Generación y creación de un nuevo espacio de trabajo.
      *
@@ -573,6 +388,11 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         try {
+            
+            if(!this.generalWorkspaceDataParameters.checkEmptieFieldsInWorkspaceData()){
+                JOptionPane.showMessageDialog(this, "Hace falta informacion", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             
             //Se crea el objeto del espacio de trabajo
             this.initialWorkSpaceProperties = this.mapWorkSpaceProperties();
@@ -625,12 +445,12 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
             serial.setFlowControlMode((FlowControlMode) comboBoxFlowControlModel.getSelectedItem());
 
             WorkSpaceProperties props = new WorkSpaceProperties().builder()
-                    .setName(textFieldWorkSpaceName.getText().trim())
-                    .setAuthor(textFieldAuthorsName.getText().trim())
+                    .setName(this.generalWorkspaceDataParameters.getTextFieldWorkSpaceName().getText().trim())
+                    .setAuthor(this.generalWorkspaceDataParameters.getTextFieldAuthorsName().getText().trim())
                     .setCreatedAt(LocalDateTime.now())
-                    .setPath(textFieldSourcePath.getText().trim())
-                    .setVersion(textFieldWorkSpaceVersion.getText().trim())
-                    .setDescription(this.textAreaDescriptionWorkspace.getText().isEmpty() ? "" : this.textAreaDescriptionWorkspace.getText())
+                    .setPath(this.generalWorkspaceDataParameters.getTextFieldSourcePath().getText().trim())
+                    .setVersion(this.generalWorkspaceDataParameters.getTextFieldWorkSpaceVersion().getText().trim())
+                    .setDescription(this.generalWorkspaceDataParameters.getTextAreaDescriptionWorkspace().getText().isEmpty() ? "" : this.generalWorkspaceDataParameters.getTextAreaDescriptionWorkspace().getText())
                     .setSerial(serial)
                     .setTxtEndingMode((TxEndingMode) comboBoxTxEndingMode.getSelectedItem())
                     .setDisplayMode((ConsoleDisplayMode) comboBoxConsoleDisplayMode.getSelectedItem())
@@ -648,58 +468,7 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
             return null;
         }
 
-    }
-
-    /**
-     * <summary>Función únicamente visual</summary>
-     * <p>
-     * usado para cambiar el color de borde del @{@code JTextField} pasado como
-     * parámetro.</p>
-     * <ul>
-     * <li>Verde: en caso de que el campo tenga datos corrector</li>
-     * <li>Rojo: en caso de que el campo se encuentre vacio</li>
-     * </ul>
-     *
-     * @param textField
-     */
-    private void colorizeBorderOfEmptyFieldsOnFocuslost(JTextField textField) {
-
-        Border border = null;
-        boolean dataAsigned = textField.getText().isEmpty() || textField.getText().length() <= 0;
-
-        if (dataAsigned) {
-            border = BorderFactory.createLineBorder(Color.RED);
-            textField.setBorder(border);
-            return;
-        }
-
-        border = BorderFactory.createLineBorder(Color.GREEN);
-        textField.setBorder(border);
-
-    }
-
-    /**
-     * verifica cuales son los campos vacios en la pestaña de datos del wizar al
-     * crear un workspace. si durante la verificación se encuentran campos
-     * vacios el botón para crear un nuevo worksapce permanecerá desactivado.
-     */
-    private void checkEmptieFieldsInWorkspaceData() {
-
-        boolean enableCreateButton = false;
-
-        Component[] cmps = this.panelGeneralWorkspaceDataParameters.getComponents();
-
-        for (Component cmp : cmps) {
-
-            if (cmp instanceof JTextField) {
-                enableCreateButton = ((JTextField) cmp).getText().length() > 0;
-            }
-
-        }
-
-        this.buttonCreateWorkspace.setEnabled(enableCreateButton);
-
-    }
+    }        
 
     /**
      * Set the inicial values of the combobox from <code>ParityMode</code> enum
@@ -762,7 +531,6 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOpenFileChoser;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonCreateWorkspace;
     private javax.swing.JComboBox<ConsoleDisplayMode> comboBoxConsoleDisplayMode;
@@ -772,25 +540,17 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
     private javax.swing.JComboBox<TxEndingMode> comboBoxTxEndingMode;
     private javax.swing.ButtonGroup configTimeStampButonGroup;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblAuthorsName;
-    private javax.swing.JLabel lblCreatedAt;
     private javax.swing.JLabel lblDataBits;
     private javax.swing.JLabel lblDefaultBaudRate;
-    private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblDisplayMode;
     private javax.swing.JLabel lblEndingMode;
     private javax.swing.JLabel lblFlowControll1;
     private javax.swing.JLabel lblFramingMode;
-    private javax.swing.JLabel lblSourcePath1;
     private javax.swing.JLabel lblStopBits;
     private javax.swing.JLabel lblUartParity;
-    private javax.swing.JLabel lblWorkspaceName;
-    private javax.swing.JLabel lblWorkspaceVersion;
     private javax.swing.JPanel panelConsoleAndSendParameters;
     private javax.swing.JPanel panelFramingModeParameters;
     private javax.swing.JPanel panelGeneralUartWorkSpaceParameters;
-    private javax.swing.JPanel panelGeneralWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
     private javax.swing.JPanel panelUartSettings;
     private javax.swing.JPanel panelWorkSpaceGeneralSettings;
@@ -800,11 +560,5 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
     private javax.swing.JSpinner spinnerDataBits;
     private javax.swing.JSpinner spinnerStopBits;
     private javax.swing.JTabbedPane tabbPaneParametersFields;
-    private javax.swing.JTextArea textAreaDescriptionWorkspace;
-    private javax.swing.JTextField textFieldAuthorsName;
-    private javax.swing.JTextField textFieldCreatedAt;
-    private javax.swing.JTextField textFieldSourcePath;
-    private javax.swing.JTextField textFieldWorkSpaceName;
-    private javax.swing.JTextField textFieldWorkSpaceVersion;
     // End of variables declaration//GEN-END:variables
 }

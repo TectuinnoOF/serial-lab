@@ -65,6 +65,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemBlankWorkSpace = new javax.swing.JMenuItem();
         jMenuItemCloseCurrentWorkSpace = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItemWorSpacePropertiesEditor = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tectuinno Serial Lab");
@@ -156,6 +157,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenuFile);
 
         jMenu2.setText("Propiedades");
+
+        jMenuItemWorSpacePropertiesEditor.setText("Espacio de trabajo");
+        jMenuItemWorSpacePropertiesEditor.addActionListener(this::jMenuItemWorSpacePropertiesEditorActionPerformed);
+        jMenu2.add(jMenuItemWorSpacePropertiesEditor);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -263,6 +269,13 @@ public class Principal extends javax.swing.JFrame {
         this.lblWorksSpaceAuthor.setText("_");
         
     }//GEN-LAST:event_closeWorkSpace
+
+    private void jMenuItemWorSpacePropertiesEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemWorSpacePropertiesEditorActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jMenuItemWorSpacePropertiesEditorActionPerformed
     
     
     /**
@@ -348,6 +361,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemBlankWorkSpace;
     private javax.swing.JMenuItem jMenuItemCloseCurrentWorkSpace;
     private javax.swing.JMenuItem jMenuItemNewWorkSpace;
+    private javax.swing.JMenuItem jMenuItemWorSpacePropertiesEditor;
     private javax.swing.JLabel lblWorkSpaceName;
     private javax.swing.JLabel lblWorksSpaceAuthor;
     private javax.swing.JLabel lblWorksSpaceVersion;
