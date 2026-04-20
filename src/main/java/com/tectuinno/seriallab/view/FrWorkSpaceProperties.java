@@ -49,13 +49,15 @@ public class FrWorkSpaceProperties extends javax.swing.JDialog {
         panelUartTtyWorkSpace1 = new com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace();
         panelPrincipalContainer = new javax.swing.JPanel();
         tabbedPaneParametersFIelds = new javax.swing.JTabbedPane();
-        generalWorkspaceDataParameters1 = new com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters();
+        generalWorkspaceDataParameters = new com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters();
+        generalUartSettings = new com.tectuinno.seriallab.view.shared.work_space.GeneralUartSettings();
         buttonSave = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
 
         setTitle("Propiedades");
 
-        tabbedPaneParametersFIelds.addTab("General", generalWorkspaceDataParameters1);
+        tabbedPaneParametersFIelds.addTab("General", generalWorkspaceDataParameters);
+        tabbedPaneParametersFIelds.addTab("UART", generalUartSettings);
 
         buttonSave.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonSave.setText("Guardar");
@@ -113,7 +115,8 @@ public class FrWorkSpaceProperties extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
-    private com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters generalWorkspaceDataParameters1;
+    private com.tectuinno.seriallab.view.shared.work_space.GeneralUartSettings generalUartSettings;
+    private com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters generalWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
     private com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace panelUartTtyWorkSpace1;
     private javax.swing.JTabbedPane tabbedPaneParametersFIelds;
