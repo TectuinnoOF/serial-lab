@@ -4,18 +4,36 @@
  */
 package com.tectuinno.seriallab.view;
 
+import com.tectuinno.seriallab.core.WorkSpaceProperties;
+import javax.swing.JFrame;
+
 /**
  *
  * @author root
  */
-public class FrWorkSpaceProperties extends javax.swing.JFrame {
+public class FrWorkSpaceProperties extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceProperties.class.getName());
-
+    
+    /**
+     * Resultado despue sde invocado el dialog
+     */
+    private boolean accepted;
+    
+    /**
+     * Las propiedades del estapacio de trabajo actual
+     */
+    private WorkSpaceProperties currentWorkSpaceProperties;
+    
+    
     /**
      * Creates new form FrWorkSpaceProperties
      */
-    public FrWorkSpaceProperties() {
+    public FrWorkSpaceProperties(JFrame parent, WorkSpaceProperties currentWorkSpaceProperties) {
+        super(parent,"Propiedades",true);
+        this.currentWorkSpaceProperties = currentWorkSpaceProperties;
+        this.accepted = false;
+        this.setLocationRelativeTo(parent);
         initComponents();
     }
 
@@ -28,48 +46,76 @@ public class FrWorkSpaceProperties extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        panelUartTtyWorkSpace1 = new com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace();
+        panelPrincipalContainer = new javax.swing.JPanel();
+        tabbedPaneParametersFIelds = new javax.swing.JTabbedPane();
+        generalWorkspaceDataParameters1 = new com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters();
+        buttonSave = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
+
         setTitle("Propiedades");
+
+        tabbedPaneParametersFIelds.addTab("General", generalWorkspaceDataParameters1);
+
+        buttonSave.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        buttonSave.setText("Guardar");
+
+        buttonCancel.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        buttonCancel.setText("Cancelar");
+
+        javax.swing.GroupLayout panelPrincipalContainerLayout = new javax.swing.GroupLayout(panelPrincipalContainer);
+        panelPrincipalContainer.setLayout(panelPrincipalContainerLayout);
+        panelPrincipalContainerLayout.setHorizontalGroup(
+            panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPaneParametersFIelds)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalContainerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonCancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonSave)
+                .addContainerGap())
+        );
+        panelPrincipalContainerLayout.setVerticalGroup(
+            panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
+                .addComponent(tabbedPaneParametersFIelds, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tabbedPaneParametersFIelds.getAccessibleContext().setAccessibleName("General");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(panelPrincipalContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(panelPrincipalContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrWorkSpaceProperties().setVisible(true));
+    public void setAccepted(boolean accepted){
+        this.accepted = accepted;
+    }
+    
+    public boolean isAccepted(){
+        return this.accepted;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCancel;
+    private javax.swing.JButton buttonSave;
+    private com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters generalWorkspaceDataParameters1;
+    private javax.swing.JPanel panelPrincipalContainer;
+    private com.tectuinno.seriallab.view.uart_com.PanelUartTtyWorkSpace panelUartTtyWorkSpace1;
+    private javax.swing.JTabbedPane tabbedPaneParametersFIelds;
     // End of variables declaration//GEN-END:variables
 }

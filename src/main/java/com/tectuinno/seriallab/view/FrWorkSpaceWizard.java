@@ -11,6 +11,7 @@ import com.tectuinno.seriallab.core.FramingMode;
 import com.tectuinno.seriallab.core.ParityMode;
 import com.tectuinno.seriallab.core.TxEndingMode;
 import com.tectuinno.seriallab.core.WorkSpaceProperties;
+import com.tectuinno.seriallab.view.shared.work_space.GeneralUartSettings;
 import com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,7 +40,8 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrWorkSpaceWizard.class.getName());
     private WorkSpaceProperties initialWorkSpaceProperties;
-    private GeneralWorkspaceDataParameters generalWorkspaceDataParameters;
+    //private GeneralWorkspaceDataParameters generalWorkspaceDataParameters;
+    //private GeneralUartSettings generalUartSettings;
     private boolean accepted;
     
     /**
@@ -48,16 +50,10 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
     public FrWorkSpaceWizard(JFrame parent,WorkSpaceProperties initialWorkSpaceProperties) {
         super(parent,"Nuevo espacio de trabajo",true);
         this.initialWorkSpaceProperties = initialWorkSpaceProperties;
-        this.accepted = false;
-        this.generalWorkspaceDataParameters = new GeneralWorkspaceDataParameters();
+        this.accepted = false;                
         initComponents();        
         this.addGeneralWorkSpaceDataParameters();
-        this.configParityModeCombobox();
-        this.configureStopbitsSpinnerModel();
-        this.configFlowControlModeCombobox();
-        this.configureTxEndingmodeComboBox();
-        this.configureFramingModeComboBox();
-        this.configureConsoleDisplayModeComboBox();
+        this.addGeneralUartSettingsPanel();
         this.setCurrentDateOnWorkApaceCreation();
         this.setLocationRelativeTo(parent);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,29 +72,9 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         panelPrincipalContainer = new javax.swing.JPanel();
         tabbPaneParametersFields = new javax.swing.JTabbedPane();
         panelWorkSpaceGeneralSettings = new javax.swing.JPanel();
-        panelUartSettings = new javax.swing.JPanel();
-        panelGeneralUartWorkSpaceParameters = new javax.swing.JPanel();
-        lblDataBits = new javax.swing.JLabel();
-        spinnerBaudRate = new javax.swing.JSpinner();
-        lblDefaultBaudRate = new javax.swing.JLabel();
-        spinnerDataBits = new javax.swing.JSpinner();
-        lblUartParity = new javax.swing.JLabel();
-        comboBoxParityMode = new javax.swing.JComboBox<>();
-        lblStopBits = new javax.swing.JLabel();
-        spinnerStopBits = new javax.swing.JSpinner();
-        comboBoxFlowControlModel = new javax.swing.JComboBox<>();
-        lblFlowControll1 = new javax.swing.JLabel();
-        panelConsoleAndSendParameters = new javax.swing.JPanel();
-        lblEndingMode = new javax.swing.JLabel();
-        comboBoxTxEndingMode = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
-        radioButtonDisableTimeStamp = new javax.swing.JRadioButton();
-        radioButtonEnableTimeStamp = new javax.swing.JRadioButton();
-        lblDisplayMode = new javax.swing.JLabel();
-        comboBoxConsoleDisplayMode = new javax.swing.JComboBox<>();
-        panelFramingModeParameters = new javax.swing.JPanel();
-        lblFramingMode = new javax.swing.JLabel();
-        comboBoxFramingmode = new javax.swing.JComboBox<>();
+        generalWorkspaceDataParameters = new com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters();
+        uartSettingsContainer = new javax.swing.JPanel();
+        generalUartSettings = new com.tectuinno.seriallab.view.shared.work_space.GeneralUartSettings();
         buttonCreateWorkspace = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
 
@@ -111,205 +87,14 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         });
 
         panelWorkSpaceGeneralSettings.setLayout(new java.awt.BorderLayout());
+        panelWorkSpaceGeneralSettings.add(generalWorkspaceDataParameters, java.awt.BorderLayout.CENTER);
+
         tabbPaneParametersFields.addTab("General", panelWorkSpaceGeneralSettings);
 
-        panelGeneralUartWorkSpaceParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros UART"));
+        uartSettingsContainer.setLayout(new java.awt.BorderLayout());
+        uartSettingsContainer.add(generalUartSettings, java.awt.BorderLayout.CENTER);
 
-        lblDataBits.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblDataBits.setText("Data bits:");
-
-        spinnerBaudRate.setModel(new javax.swing.SpinnerNumberModel(9600, 1200, 260000, 5));
-        spinnerBaudRate.setToolTipText("Taza de baudios por defecto para comunicación");
-
-        lblDefaultBaudRate.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblDefaultBaudRate.setText("Baud Rate:");
-
-        spinnerDataBits.setModel(new javax.swing.SpinnerNumberModel(8, 5, 16, 1));
-        spinnerDataBits.setToolTipText("Taza de baudios por defecto para comunicación");
-
-        lblUartParity.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblUartParity.setText("Parity:");
-
-        lblStopBits.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblStopBits.setText("Stop bits:");
-
-        spinnerStopBits.setToolTipText("Taza de baudios por defecto para comunicación");
-
-        lblFlowControll1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblFlowControll1.setText("Flow Control:");
-
-        javax.swing.GroupLayout panelGeneralUartWorkSpaceParametersLayout = new javax.swing.GroupLayout(panelGeneralUartWorkSpaceParameters);
-        panelGeneralUartWorkSpaceParameters.setLayout(panelGeneralUartWorkSpaceParametersLayout);
-        panelGeneralUartWorkSpaceParametersLayout.setHorizontalGroup(
-            panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                        .addComponent(lblUartParity)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxParityMode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblStopBits)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spinnerStopBits))
-                    .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                        .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                                .addComponent(lblDefaultBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                                .addComponent(lblFlowControll1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxFlowControlModel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(209, 209, 209)))
-                        .addGap(0, 19, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelGeneralUartWorkSpaceParametersLayout.setVerticalGroup(
-            panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeneralUartWorkSpaceParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(spinnerBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDefaultBaudRate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinnerDataBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUartParity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxParityMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinnerStopBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelGeneralUartWorkSpaceParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboBoxFlowControlModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFlowControll1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        panelConsoleAndSendParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Envio y consola"));
-
-        lblEndingMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblEndingMode.setText("Tx Ending");
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Time Stamp en consola"));
-
-        configTimeStampButonGroup.add(radioButtonDisableTimeStamp);
-        radioButtonDisableTimeStamp.setText("No permitir");
-
-        configTimeStampButonGroup.add(radioButtonEnableTimeStamp);
-        radioButtonEnableTimeStamp.setText("Permitir");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(radioButtonEnableTimeStamp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioButtonDisableTimeStamp)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioButtonDisableTimeStamp)
-                    .addComponent(radioButtonEnableTimeStamp))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        lblDisplayMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblDisplayMode.setText("Display");
-
-        javax.swing.GroupLayout panelConsoleAndSendParametersLayout = new javax.swing.GroupLayout(panelConsoleAndSendParameters);
-        panelConsoleAndSendParameters.setLayout(panelConsoleAndSendParametersLayout);
-        panelConsoleAndSendParametersLayout.setHorizontalGroup(
-            panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEndingMode)
-                    .addComponent(lblDisplayMode))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBoxTxEndingMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboBoxConsoleDisplayMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelConsoleAndSendParametersLayout.setVerticalGroup(
-            panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelConsoleAndSendParametersLayout.createSequentialGroup()
-                        .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxTxEndingMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelConsoleAndSendParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDisplayMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxConsoleDisplayMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelFramingModeParameters.setBorder(javax.swing.BorderFactory.createTitledBorder("Framing"));
-
-        lblFramingMode.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblFramingMode.setText("Framing mode:");
-
-        javax.swing.GroupLayout panelFramingModeParametersLayout = new javax.swing.GroupLayout(panelFramingModeParameters);
-        panelFramingModeParameters.setLayout(panelFramingModeParametersLayout);
-        panelFramingModeParametersLayout.setHorizontalGroup(
-            panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFramingModeParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblFramingMode)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxFramingmode, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelFramingModeParametersLayout.setVerticalGroup(
-            panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFramingModeParametersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelFramingModeParametersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFramingMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxFramingmode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout panelUartSettingsLayout = new javax.swing.GroupLayout(panelUartSettings);
-        panelUartSettings.setLayout(panelUartSettingsLayout);
-        panelUartSettingsLayout.setHorizontalGroup(
-            panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelFramingModeParameters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panelUartSettingsLayout.setVerticalGroup(
-            panelUartSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUartSettingsLayout.createSequentialGroup()
-                .addComponent(panelGeneralUartWorkSpaceParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelConsoleAndSendParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelFramingModeParameters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
-        );
-
-        tabbPaneParametersFields.addTab("Configuración", panelUartSettings);
+        tabbPaneParametersFields.addTab("UART", uartSettingsContainer);
 
         buttonCreateWorkspace.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         buttonCreateWorkspace.setText("Crear");
@@ -325,7 +110,7 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tabbPaneParametersFields)
             .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 381, Short.MAX_VALUE)
                 .addComponent(buttonCancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonCreateWorkspace))
@@ -333,8 +118,8 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         panelPrincipalContainerLayout.setVerticalGroup(
             panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalContainerLayout.createSequentialGroup()
-                .addComponent(tabbPaneParametersFields, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tabbPaneParametersFields, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCreateWorkspace)
                     .addComponent(buttonCancel))
@@ -372,7 +157,11 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         LocalDate current = LocalDate.now();
         this.generalWorkspaceDataParameters.getTextFieldCreatedAt().setText(current.toString());
     }
-
+    
+    private void addGeneralUartSettingsPanel(){
+        this.uartSettingsContainer.add(this.generalUartSettings,BorderLayout.CENTER);
+    }
+    
     private void addGeneralWorkSpaceDataParameters(){
         
         this.panelWorkSpaceGeneralSettings.add(this.generalWorkspaceDataParameters,BorderLayout.CENTER);
@@ -438,11 +227,11 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
         try {
 
             WorkSpaceProperties.SerialConfig serial = new WorkSpaceProperties.SerialConfig();
-            serial.setBaudRate(((Number) spinnerBaudRate.getValue()).intValue());
-            serial.setDataBits(((Number) spinnerDataBits.getValue()).intValue());
-            serial.setStopBits(((Number) spinnerStopBits.getValue()).doubleValue());
-            serial.setParityMode((ParityMode) comboBoxParityMode.getSelectedItem());
-            serial.setFlowControlMode((FlowControlMode) comboBoxFlowControlModel.getSelectedItem());
+            serial.setBaudRate(this.generalUartSettings.getBaudRate());
+            serial.setDataBits(this.generalUartSettings.getDatabits());
+            serial.setStopBits(this.generalUartSettings.getStopBits());
+            serial.setParityMode(this.generalUartSettings.getParityMode());
+            serial.setFlowControlMode(this.generalUartSettings.getFlowControlMode());
 
             WorkSpaceProperties props = new WorkSpaceProperties().builder()
                     .setName(this.generalWorkspaceDataParameters.getTextFieldWorkSpaceName().getText().trim())
@@ -452,10 +241,10 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
                     .setVersion(this.generalWorkspaceDataParameters.getTextFieldWorkSpaceVersion().getText().trim())
                     .setDescription(this.generalWorkspaceDataParameters.getTextAreaDescriptionWorkspace().getText().isEmpty() ? "" : this.generalWorkspaceDataParameters.getTextAreaDescriptionWorkspace().getText())
                     .setSerial(serial)
-                    .setTxtEndingMode((TxEndingMode) comboBoxTxEndingMode.getSelectedItem())
-                    .setDisplayMode((ConsoleDisplayMode) comboBoxConsoleDisplayMode.getSelectedItem())
-                    .setTimeStampEnabled(this.radioButtonEnableTimeStamp.isSelected())
-                    .setFramingMode((FramingMode) comboBoxFramingmode.getSelectedItem())
+                    .setTxtEndingMode(this.generalUartSettings.getTxEndingMode())
+                    .setDisplayMode(this.generalUartSettings.getDisplayMode())
+                    .setTimeStampEnabled(this.generalUartSettings.isTimeStampEnabled())
+                    .setFramingMode(this.generalUartSettings.getFramingMode())
                     .build();
 
             System.out.println(props.toString());
@@ -470,95 +259,18 @@ public class FrWorkSpaceWizard extends javax.swing.JDialog {
 
     }        
 
-    /**
-     * Set the inicial values of the combobox from <code>ParityMode</code> enum
-     *
-     * @author Pablo_g
-     * @see ParityMode
-     */
-    private void configParityModeCombobox() {
-        this.comboBoxParityMode.setModel(new DefaultComboBoxModel<>(ParityMode.values()));
-    }
-
-    /**
-     * Set the inicial values of the combobox from <code>FlowControlMode</code>
-     * enum
-     *
-     * @author pablo_g
-     * @see FlowControlMode
-     */
-    private void configFlowControlModeCombobox() {
-        this.comboBoxFlowControlModel.setModel(new DefaultComboBoxModel<>(FlowControlMode.values()));
-    }
-
-    private void configureTxEndingmodeComboBox() {
-        this.comboBoxTxEndingMode.setModel(new DefaultComboBoxModel<>(TxEndingMode.values()));
-    }
-
-    private void configureFramingModeComboBox() {
-        this.comboBoxFramingmode.setModel(new DefaultComboBoxModel<>(FramingMode.values()));
-    }
-
-    /**
-     * Asigna el modelo de datos el combobox para seleccionar el modo de
-     * visualización de Texto en la consola. los valores son cargados desde
-     * {@code ConsoleDisplayMode}.
-     *
-     * @author Pablo_g
-     * @see ConsoleDisplayMode
-     */
-    private void configureConsoleDisplayModeComboBox() {
-        this.comboBoxConsoleDisplayMode.setModel(new DefaultComboBoxModel<>(ConsoleDisplayMode.values()));
-    }
-
-    /**
-     * Set the permitted values for the JSpinner used to set the Stop bits mode
-     *
-     * @author Pablo_g
-     */
-    private void configureStopbitsSpinnerModel() {
-        SpinnerNumberModel model = new SpinnerNumberModel(1d, 1d, 2d, 0.5d);
-        this.spinnerStopBits.setModel(model);
-
-        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(this.spinnerStopBits, "#0.#");
-        this.spinnerStopBits.setEditor(editor);
-
-        DecimalFormat format = editor.getFormat();
-        format.setMinimumFractionDigits(0);
-        format.setMaximumFractionDigits(1);
-        editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
-    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonCreateWorkspace;
-    private javax.swing.JComboBox<ConsoleDisplayMode> comboBoxConsoleDisplayMode;
-    private javax.swing.JComboBox<FlowControlMode> comboBoxFlowControlModel;
-    private javax.swing.JComboBox<FramingMode> comboBoxFramingmode;
-    private javax.swing.JComboBox<ParityMode> comboBoxParityMode;
-    private javax.swing.JComboBox<TxEndingMode> comboBoxTxEndingMode;
     private javax.swing.ButtonGroup configTimeStampButonGroup;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblDataBits;
-    private javax.swing.JLabel lblDefaultBaudRate;
-    private javax.swing.JLabel lblDisplayMode;
-    private javax.swing.JLabel lblEndingMode;
-    private javax.swing.JLabel lblFlowControll1;
-    private javax.swing.JLabel lblFramingMode;
-    private javax.swing.JLabel lblStopBits;
-    private javax.swing.JLabel lblUartParity;
-    private javax.swing.JPanel panelConsoleAndSendParameters;
-    private javax.swing.JPanel panelFramingModeParameters;
-    private javax.swing.JPanel panelGeneralUartWorkSpaceParameters;
+    private com.tectuinno.seriallab.view.shared.work_space.GeneralUartSettings generalUartSettings;
+    private com.tectuinno.seriallab.view.shared.work_space.GeneralWorkspaceDataParameters generalWorkspaceDataParameters;
     private javax.swing.JPanel panelPrincipalContainer;
-    private javax.swing.JPanel panelUartSettings;
     private javax.swing.JPanel panelWorkSpaceGeneralSettings;
-    private javax.swing.JRadioButton radioButtonDisableTimeStamp;
-    private javax.swing.JRadioButton radioButtonEnableTimeStamp;
-    private javax.swing.JSpinner spinnerBaudRate;
-    private javax.swing.JSpinner spinnerDataBits;
-    private javax.swing.JSpinner spinnerStopBits;
     private javax.swing.JTabbedPane tabbPaneParametersFields;
+    private javax.swing.JPanel uartSettingsContainer;
     // End of variables declaration//GEN-END:variables
 }

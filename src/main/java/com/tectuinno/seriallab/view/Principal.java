@@ -37,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.lblWorkSpaceName.setText("_");
         this.lblWorksSpaceVersion.setText("_");
-        this.lblWorksSpaceAuthor.setText("_");
+        this.lblWorksSpaceAuthor.setText("_");        
     }
 
     /**
@@ -273,7 +273,13 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItemWorSpacePropertiesEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemWorSpacePropertiesEditorActionPerformed
         // TODO add your handling code here:
         
+        if(this.workSpaceProperties == null){
+            JOptionPane.showMessageDialog(this, "No se ha iniciado un espacio de trabajo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
+        FrWorkSpaceProperties frWorkSpaceProperties = new FrWorkSpaceProperties(this, this.workSpaceProperties);        
+        frWorkSpaceProperties.setVisible(true);
         
     }//GEN-LAST:event_jMenuItemWorSpacePropertiesEditorActionPerformed
     
